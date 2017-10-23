@@ -1,6 +1,5 @@
-import {tokenizer} from './main'
+// import {tokenizer} from './main'
+let {tokenizer } = require ('./main');
 
-let input = "-" +
-    "{}" +
-    "*+";
+let input = "abcd @b";
 tokenizer(input);

@@ -1,7 +1,5 @@
 import {tokenizer} from './main'
 
-let input ="'ccc'a-*-" ;
-
-
+let input = "abcd sail";
 
 tokenizer(input);

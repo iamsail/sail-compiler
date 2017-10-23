@@ -23,7 +23,7 @@ let print = (tokens) =>{
 };
 
 let tokenizer = (input)  =>{
-    let current = 0;
+    let current = 0; // ?????
     let tokens = [];
     let errorStatus = 0;
     let rowColumn = {
@@ -88,6 +88,7 @@ let tokenizer = (input)  =>{
         }
 
 
+        //?????????(string)?????,??????
         if(char === '"'){
             let value = '';
             rowColumn.column--;
@@ -98,10 +99,11 @@ let tokenizer = (input)  =>{
                 rowColumn.column++;
             }
             tokens.push({ type: 'string', value:value });
+            rowColumn.column++;
+            char = input[++current];
             continue;
         }
 
-        // let input ="'ccc'-*-" ;
 
         if(char === "'"){
             let value = '';
@@ -118,7 +120,14 @@ let tokenizer = (input)  =>{
         }
 
 
-        else{
+
+        // let input = "abcd";
+        let firstLetter =  /(_|[a-z])/i;
+        // let variableName = /(_|[a-z])(_|[a-z]|[0-9])/i;
+        let variableName = /[a-z]/;
+
+
+        if(char === '+' || char === '-' || char === '*' || char === '/' || char === '=' || char === '<' || char === ';') {
             switch (char){
                 case '+': current = getToken(tokens,'13','+',current);continue;break;
                 case '-': current = getToken(tokens,'14','-',current);continue;break;
@@ -129,6 +138,27 @@ let tokenizer = (input)  =>{
                 case ';': current = getToken(tokens,'19',';',current);continue;break;
                 default : errorStatus = -2;log("||" + char +"||");logError(errorStatus,rowColumn.row,rowColumn.column);break;
             }
+        }
+
+
+        // ??????????,???? ?? ????????
+        //TODO:  ???????????????
+        //TODO:  ???????????????,??????????,??????????????   ???????
+        //TODO:  /(_|[a-z])(_|[a-z]|[0-9])/i
+        // let variableName = /[a-z]/i;
+
+    else if (firstLetter.test(char)) {
+            let value = '';
+            //TODO:??????????,??????undefined
+            while (variableName.test(char) && char !== undefined) {
+                value += char;
+                char = input[++current];
+                rowColumn.column++;
+            }
+            tokens.push({ type: 'variable', value });
+            rowColumn.column++;
+            char = input[++current];
+            continue;
         }
         current++;
     }

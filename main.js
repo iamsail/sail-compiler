@@ -14,6 +14,11 @@ let logError = (errorStatus,row,column) =>{
         log("lexical analysis error,your enter is error!");
         log("Error at  " + row + ":" + column);
     }
+
+    if(errorStatus === -3){
+        log("your variableName is error");
+        log("Error at  " + row + ":" + column);
+    }
 };
 
 let print = (tokens) =>{
@@ -23,7 +28,7 @@ let print = (tokens) =>{
 };
 
 let tokenizer = (input)  =>{
-    let current = 0;
+    let current = 0; // 这个是指针
     let tokens = [];
     let errorStatus = 0;
     let rowColumn = {
@@ -88,6 +93,7 @@ let tokenizer = (input)  =>{
         }
 
 
+        //以下部分是对字符串(string)包括单引号,双引号的处理
         if(char === '"'){
             let value = '';
             rowColumn.column--;
@@ -98,6 +104,8 @@ let tokenizer = (input)  =>{
                 rowColumn.column++;
             }
             tokens.push({ type: 'string', value:value });
+            rowColumn.column++;
+            char = input[++current];
             continue;
         }
 
@@ -117,7 +125,14 @@ let tokenizer = (input)  =>{
         }
 
 
-        else{
+
+        // let input = "abcd";
+        let firstLetter =  /(_|[a-z])/i;
+        // let variableName = /(_|[a-z])(_|[a-z]|[0-9])/i;
+        let variableName = /[a-z]/;
+
+
+        if(char === '+' || char === '-' || char === '*' || char === '/' || char === '=' || char === '<' || char === ';') {
             switch (char){
                 case '+': current = getToken(tokens,'13','+',current);continue;break;
                 case '-': current = getToken(tokens,'14','-',current);continue;break;
@@ -129,6 +144,53 @@ let tokenizer = (input)  =>{
                 default : errorStatus = -2;log("||" + char +"||");logError(errorStatus,rowColumn.row,rowColumn.column);break;
             }
         }
+
+
+        // 以下是对标识符的处理,也就是对 用户 取的变量名的处理
+        //TODO:  我需要写一个对标识符处理的正则
+        //TODO:  这里我把标识符的命名规则定义为,以字母或者下划线开头,然后字母，下划线，数字的组合   记得忽略大小写
+        //TODO:  /(_|[a-z])(_|[a-z]|[0-9])/i
+        // let variableName = /[a-z]/i;
+
+        else if (firstLetter.test(char)) {  // 对首个字符匹配
+            let value = '';
+            log("重头再来");
+            //TODO:最后对变量名进行处理,但是不能等于undefined
+
+            let variableResult = variableName.test(char);
+
+            while (variableName.test(char)) {
+                if(char !== undefined){
+
+                    value += char;
+                    char = input[++current];
+
+                    let WHITESPACE = /\s/;
+                    log("此时char是  " + char);
+                    if (WHITESPACE.test(char)) {
+
+                        current++;
+                        log("执行了");
+                        break;
+                    }
+                    log("恩惠");
+
+                    let variableResult = variableName.test(char);
+
+                    if(variableResult){
+                        rowColumn.column++;
+                    }else{
+                        rowColumn.column ++;
+                        errorStatus = -3;log("||" + char +"||");logError(errorStatus,rowColumn.row,rowColumn.column);break;
+                    }
+                }
+            }
+
+            tokens.push({ type: 'variable', value });
+            rowColumn.column++;
+            char = input[++current];
+            continue;
+        }
         current++;
     }
     log(rowColumn.row);
@@ -137,6 +199,7 @@ let tokenizer = (input)  =>{
     }
 };
 
-export  {tokenizer};
+// export  {tokenizer};
+module.exports = {tokenizer};
 
 
