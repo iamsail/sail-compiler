@@ -37,7 +37,6 @@ let tokenizer = (input)  =>{
     };
     while(current < input.length && errorStatus===0 ){
         let char = input[current];
-        log("current  最初   " + current +"   " +tokens[char]);
 
         if(char === '\n'){
             rowColumn.row++;
@@ -145,15 +144,14 @@ let tokenizer = (input)  =>{
             //TODO:最后对变量名进行处理,但是不能等于undefined
 
             while (variableName.test(char)) {
-                log(char);
                 if(char !== undefined){
                     value += char;
                     char = input[++current];
                    if(char !== undefined){
                        let WHITESPACE = /\s/;
                        if (WHITESPACE.test(char)) {
-                           current++;
-                           log("跳出 " );
+                           //TODO:就是这一行,导致定位不准确,总算搞定了
+                           // current++;
                            break;
                        }
                        let variableResult = variableName.test(char);
@@ -167,7 +165,8 @@ let tokenizer = (input)  =>{
                    } else{
                        errorStatus = -2;log("||" + char +"||");logError(errorStatus,rowColumn.row,rowColumn.column);break;
                    }
-                }else{break;}
+                }else{
+                    break;}
             }
 
             tokens.push({ type: 'variable', value });
