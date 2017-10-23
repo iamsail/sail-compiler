@@ -9,8 +9,11 @@ let getToken = (tokens,type,value,current) =>{
 
 let log = console.log.bind(console);
 
-let logError = (errorStatus) =>{
-    if(errorStatus === -2){ log("praser error,your enter is error!"); }
+let logError = (errorStatus,row,column) =>{
+    if(errorStatus === -2){
+        log("lexical analysis error,your enter is error!");
+        log("Error at  " + row + ":" + column);
+    }
 };
 
 let print = (tokens) =>{
@@ -25,15 +28,19 @@ let tokenizer = (input)  =>{
     let errorStatus = 0;
     let rowColumn = {
         row : 1,
-        column : 1
+        column : 0
     };
     while(current < input.length && errorStatus===0 ){
         let char = input[current];
 
         if(char === '\n'){
             rowColumn.row++;
+            rowColumn.column = 0;
+             current++;
+             continue;
+        }else{
+            rowColumn.column++;
         }
-
 
         if(char === '{'){
             current = getToken(tokens,'parent','{',current);
@@ -52,17 +59,14 @@ let tokenizer = (input)  =>{
                 case '=': current = getToken(tokens,'17','=',current);continue;break;
                 case '<': current = getToken(tokens,'18','<',current);continue;break;
                 case ';': current = getToken(tokens,'19',';',current);continue;break;
-                default : errorStatus = -2;logError(errorStatus);break;
+                default : errorStatus = -2;logError(errorStatus,rowColumn.row,rowColumn.column);break;
             }
         }
         current++;
     }
-     log(rowColumn.row);
+    log(rowColumn.row);
     if(errorStatus === 0){
         print(tokens);
     }
 };
-
 export  {tokenizer};
-
-
