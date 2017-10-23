@@ -14,15 +14,26 @@ let logError = (errorStatus) =>{
 };
 
 let print = (tokens) =>{
-
-}
+    for (let index of tokens.keys()) {
+        log("(" + tokens[index].type + " ," + tokens[index].value +" )" );
+    }
+};
 
 let tokenizer = (input)  =>{
     let current = 0;
     let tokens = [];
     let errorStatus = 0;
+    let rowColumn = {
+        row : 1,
+        column : 1
+    };
     while(current < input.length && errorStatus===0 ){
         let char = input[current];
+
+        if(char === '\n'){
+            rowColumn.row++;
+        }
+
 
         if(char === '{'){
             current = getToken(tokens,'parent','{',current);
@@ -46,12 +57,11 @@ let tokenizer = (input)  =>{
         }
         current++;
     }
+    // log(rowColumn.row);
     if(errorStatus === 0){
-        console.log(tokens);
+        print(tokens);
     }
 };
-
-
 
 export  {tokenizer};
 

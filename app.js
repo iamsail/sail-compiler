@@ -1,4 +1,6 @@
 import {tokenizer} from './main'
 
-let input = "aaa";
+let input = "-" +
+    "{}" +
+    "*+";
 tokenizer(input);
