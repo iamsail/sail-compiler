@@ -48,6 +48,44 @@ let tokenizer = (input)  =>{
             current = getToken(tokens,'parent','}',current);
             continue;
         }
+
+        // 移动后我们将检查空格及空白字符串，若匹配到则不作任何处理，光标继续后移
+        let WHITESPACE = /\s/;
+        if (WHITESPACE.test(char)) {
+            current++;
+            continue;
+        }
+
+        // 之后的 token 类型是 number 。这和我们刚刚处理的不同，因为我们需要截取一个整个 number
+        // 来作为 token
+        //
+        //   (add 123 456)
+        //        ^^^ ^^^
+        //        Only two separate tokens
+        //
+        // 所以我们重新创建一个循环，当遇到第一个 number 是婚后
+        //TODO:1. 这里需要特别注意一下，对于数字的处理,这里没有考虑开始字母为0的情况
+        let NUMBERS = /[0-9]/;
+        if (NUMBERS.test(char)) {
+
+            // 我们创建一个 value 字符串来储存字符
+            let value = '';
+
+            // 之后我们创建一个循环来把连续的 number 储存在 value 中并增加 current 的值
+            while (NUMBERS.test(char)) {
+                value += char;
+                char = input[++current];
+            }
+
+            // 之后我们把 number 类型的 token 储存起来,这里书上是使用的13
+            tokens.push({ type: 'number', value:value });
+
+            // 再进行下一次循环
+            continue;
+        }
+
+
+
         else{
             switch (char){
                 case '+': current = getToken(tokens,'13','+',current);continue;break;
@@ -57,7 +95,7 @@ let tokenizer = (input)  =>{
                 case '=': current = getToken(tokens,'17','=',current);continue;break;
                 case '<': current = getToken(tokens,'18','<',current);continue;break;
                 case ';': current = getToken(tokens,'19',';',current);continue;break;
-                default : errorStatus = -2;logError(errorStatus,rowColumn.row,rowColumn.column);break;
+                default : errorStatus = -2;log("||" + char +"||");logError(errorStatus,rowColumn.row,rowColumn.column);break;
             }
         }
         current++;

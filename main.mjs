@@ -36,8 +36,6 @@ let tokenizer = (input)  =>{
         if(char === '\n'){
             rowColumn.row++;
             rowColumn.column = 0;
-             current++;
-             continue;
         }else{
             rowColumn.column++;
         }
@@ -50,6 +48,44 @@ let tokenizer = (input)  =>{
             current = getToken(tokens,'parent','}',current);
             continue;
         }
+
+        // ???????????????????????????????????
+        let WHITESPACE = /\s/;
+        if (WHITESPACE.test(char)) {
+            current++;
+            continue;
+        }
+
+        // ??? token ??? number ????????????????????????? number
+        // ??? token
+        //
+        //   (add 123 456)
+        //        ^^^ ^^^
+        //        Only two separate tokens
+        //
+        // ??????????????????? number ???
+        //TODO:1. ??????????????????,???????????0???
+        let NUMBERS = /[0-9]/;
+        if (NUMBERS.test(char)) {
+
+            // ?????? value ????????
+            let value = '';
+
+            // ??????????????? number ??? value ???? current ??
+            while (NUMBERS.test(char)) {
+                value += char;
+                char = input[++current];
+            }
+
+            // ????? number ??? token ????,????????13
+            tokens.push({ type: 'number', value:value });
+
+            // ????????
+            continue;
+        }
+
+
+
         else{
             switch (char){
                 case '+': current = getToken(tokens,'13','+',current);continue;break;
@@ -59,7 +95,7 @@ let tokenizer = (input)  =>{
                 case '=': current = getToken(tokens,'17','=',current);continue;break;
                 case '<': current = getToken(tokens,'18','<',current);continue;break;
                 case ';': current = getToken(tokens,'19',';',current);continue;break;
-                default : errorStatus = -2;logError(errorStatus,rowColumn.row,rowColumn.column);break;
+                default : errorStatus = -2;log("||" + char +"||");logError(errorStatus,rowColumn.row,rowColumn.column);break;
             }
         }
         current++;
@@ -69,4 +105,7 @@ let tokenizer = (input)  =>{
         print(tokens);
     }
 };
+
 export  {tokenizer};
+
+

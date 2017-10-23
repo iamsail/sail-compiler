@@ -1,8 +1,8 @@
 import {tokenizer} from './main'
 
-let input = "-\n" +
-    "{}c" +
-    "*+";
+let input = "-   \n" +
+    "{}23334" +
+    "*1111+";
 
 
 tokenizer(input);
