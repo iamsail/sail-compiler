@@ -175,13 +175,6 @@ let tokenizer = (input)  =>{
             continue;
         }
 
-
-
-
-
-
-
-
         // if(char === '+' || char === '-' || char === '*' || char === '/' || char === '=' || char === '<' || char === ';') {
 
         else{
@@ -197,10 +190,6 @@ let tokenizer = (input)  =>{
             }
         }
         // }
-
-
-
-
 
         current++;
     }
