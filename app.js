@@ -3,37 +3,14 @@ let {tokenizer } = require ('./main');
 let {deleteComment } = require ('./deleteComment');
 
 
+let input = "//ab123@c\n" +
+    "//ab123@c\n" +
+    "hello world 1243\n" +
+    "/* fefe\n" +
+    "312fdabcd\n" +
+    "*/\n" +
+    "include iostream";
 
-// let input = "//ab123@c\n" +
-//     "//ab123@c\n" +
-//     "hello world 1243\n" +
-//     "/* fefe\n" +
-//     "312fdabcd\n" +
-//     "*/\n" +
-//     "/* fefe\n" +
-//     "312fdabcd\n" +
-//     "*/\n" +
-//     "/* fefe\n" +
-//     "312fdabcd\n" +
-//     "*/\n" +
-//     "include iostream";
-
-// TODO:最后以字母结尾会报错
-let input = "hello world";
-
-// let input = "//ab123@c\n" +
-//     "//ab123@c\n" +
-//     "hello world 1243\n" +
-//     "/* fefe\n" +
-//     "312fdabcd\n" +
-//     "*/\n" +
-//     "/* fefe\n" +
-//     "312fdabcd\n" +
-//     "*/\n" +
-//     "/* fefe\n" +
-//     "312fdabcd\n" +
-//     "*/\n" +
-//     "include iostream\n";
 
 
 input = deleteComment(input);

@@ -143,39 +143,41 @@ let tokenizer = (input)  =>{
             let value = '';
             //TODO:最后对变量名进行处理,但是不能等于undefined
 
-            while (variableName.test(char)) {
-                if(char !== undefined){
-                    value += char;
-                    char = input[++current];
-                   if(char !== undefined){
-                       let WHITESPACE = /\s/;
-                       if (WHITESPACE.test(char)) {
-                           //TODO:就是这一行,导致定位不准确,总算搞定了
-                           // current++;
-                           break;
-                       }
-                       let variableResult = variableName.test(char);
+         while (variableName.test(char)) {
+             if(char !== undefined){
+                 value += char;
+                 char = input[++current];
+                 if(char !== undefined){
+                     let WHITESPACE = /\s/;
+                     if (WHITESPACE.test(char)) {
+                         //TODO:就是这一行,导致定位不准确,总算搞定了
+                         // current++;
+                         break;
+                     }
+                     let variableResult = variableName.test(char);
 
-                       if(variableResult){
-                           rowColumn.column++;
-                       }else{
-                           rowColumn.column ++;
-                           errorStatus = -3;log("||" + char +"||");logError(errorStatus,rowColumn.row,rowColumn.column);break;
-                       }
-                   } else{
-                       errorStatus = -2;log("||" + char +"||");logError(errorStatus,rowColumn.row,rowColumn.column);break;
-                   }
-                }else{
-                    break;}
-            }
+                     if(variableResult){
+                         rowColumn.column++;
+                     }else{
+                         rowColumn.column ++;
+                         errorStatus = -3;log("||" + char +"||");logError(errorStatus,rowColumn.row,rowColumn.column);break;
+                     }
+                 } else if(rowColumn.column === input.length){ //处理完字符串
+                     break;
+                 }else{
+                     // log("column    length   " + rowColumn.column  + "   "+input.length);
+                     // errorStatus = -2;log("||" + char +"||");logError(errorStatus,rowColumn.row,rowColumn.column);break;
+                    break;
+                 }
+             }else{
+                 break;}
+         }
 
-            tokens.push({ type: 'variable', value });
+         tokens.push({ type: 'variable', value });
             rowColumn.column++;
             char = input[++current];
             continue;
         }
-
-        // if(char === '+' || char === '-' || char === '*' || char === '/' || char === '=' || char === '<' || char === ';') {
 
         else{
             switch (char){
@@ -189,7 +191,6 @@ let tokenizer = (input)  =>{
                 default : errorStatus = -2;log("||" + char +"||");logError(errorStatus,rowColumn.row,rowColumn.column);break;
             }
         }
-        // }
 
         current++;
     }
