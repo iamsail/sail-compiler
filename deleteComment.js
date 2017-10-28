@@ -1,16 +1,24 @@
-let deleteComment = (input) =>{
-    //TODO:先去除单行注释
-    // let singleComment = /^\s*\/\/.*\n$/;
-    // let singleComment = /(^\s*\/\/.*\n$)+/;
-    console.log("去除前   \n" + input);
+
+let deleteSingleLine = (input) =>{
     let singleComment = /(\s*\/\/.*(\n)*)+/;
-    let result = singleComment.test(input);
-    console.log("匹配结果   " + result);
-    return input.replace(singleComment,"");
+    let result = input.replace(singleComment,"")
+    console.log("单行注释处理完毕  "+result);
+    return result;
+};
+
+let deleteMultiLine = (input) => {
+    let MultiComment = /\/\*(.*\n*)*\*\//;
+    let result =  input.replace(MultiComment,"")
+    console.log("多行注释处理完毕  "+result);
+    return result;
 };
 
 
+let deleteComment = (input) => {
 
+    // return deleteSingleLine(input);
+    return deleteMultiLine(deleteSingleLine(input));
+};
 
 
 module.exports = {deleteComment};
