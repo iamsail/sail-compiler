@@ -1,5 +1,5 @@
 // import {tokenizer} from './main'
-let {tokenizer } = require ('./main');
+let {tokenizer } = require ('./compiler');
 let {deleteComment } = require ('./deleteComment');
 
 
