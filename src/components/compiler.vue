@@ -1,6 +1,5 @@
 <template>
     <div class="hello">
-
         <el-row type="flex" class="row-bg" justify="space-around" >
             <el-col :span="10"><div class="grid-content  bg-purple">
                 <el-input
@@ -50,17 +49,24 @@
             compile:function(){
                 console.log("处理前 \n");
                 console.log(this.textarea3);
+                console.log("===========");
 
-                console.log("=========");
                 let temp = start(this.textarea3);
-                let resultString="";
-                temp.forEach(function(item){
-                    resultString += `(${item.type},${item.value})\n`;
-                })
-                console.log("=========");
-                console.log(resultString);
-                this.textarea2 =  resultString;
-//                console.log(this.textarea2);
+                console.log(temp);
+
+                if(!temp.error){
+                    console.log("正确");
+                }
+                else{
+                    console.log("错误");
+                }
+
+
+//                let resultString="";
+//                temp.forEach(function(item){
+//                    resultString += `(${item.type},${item.value})\n`;
+//                })
+//                this.textarea2 =  resultString;
             },
             del:function(){
                 this.textarea2 = "";

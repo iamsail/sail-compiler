@@ -1,5 +1,10 @@
 let {print } = require ('./print');
 
+let finalResult = {
+    error: false,
+    info : ""
+}
+
 let getToken = (tokens,type,value,current) =>{
     tokens.push({
         type: type,
@@ -9,49 +14,33 @@ let getToken = (tokens,type,value,current) =>{
     return current;
 };
 
-let finalResult = {
-    error: true,
-    info : null
-}
 
 
 let log = console.log.bind(console);
 
 let logError = (errorStatus,row,column) =>{
 
-    // if(errorStatus === -2){
-    //     log("lexical analysis error,your enter is error!");
-    //     log("Error at  " + row + ":" + column);
-    // }
-    //
-    // if(errorStatus === -3){
-    //     log("your variableName is error");
-    //     log("Error at  " + row + ":" + column);
-    // }
 
+
+    finalResult.error = true;
     let errorLogs = "";
-
-
     if(errorStatus === -2){
-        // log("lexical analysis error,your enter is error!");
-        // log("Error at  " + row + ":" + column);
         errorLogs += `lexical analysis error,your enter is error!\nError at  ${row}:${column}`;
-        return errorLogs;
+        finalResult.info = errorLogs;
     }
+
+
 
     if(errorStatus === -3){
-        // log("your variableName is error");
-        // log("Error at  " + row + ":" + column);
         errorLogs += `your variableName is error!Error at  ${row}:${column}`;
-        return errorLogs;
+        finalResult.info = errorLogs;
     }
-
-
 };
 
 
 
 let tokenizer = (input)  =>{
+    finalResult.error = false;
     let current = 0; // 这个是指针
     let tokens = [];
     let errorStatus = 0;
@@ -59,6 +48,7 @@ let tokenizer = (input)  =>{
         row : 1,
         column : 0
     };
+
     while(current < input.length && errorStatus===0 ){
         let char = input[current];
 
@@ -185,7 +175,8 @@ let tokenizer = (input)  =>{
                          rowColumn.column++;
                      }else{
                          rowColumn.column ++;
-                         errorStatus = -3;log("||" + char +"||");logError(errorStatus,rowColumn.row,rowColumn.column);break;
+                         // errorStatus = -3;log("||" + char +"||");logError(errorStatus,rowColumn.row,rowColumn.column);break;
+                         errorStatus = -3;logError(errorStatus,rowColumn.row,rowColumn.column);break;
                      }
                  } else if(rowColumn.column === input.length){ //处理完字符串
                      break;
@@ -207,7 +198,7 @@ let tokenizer = (input)  =>{
         else{
             switch (char){
                 case '+': current = getToken(tokens,'13','+',current);continue;break;
-                case '-': current = getToken(tokens,'14','-',current);continue;break;
+                case '-': current = gefinalResulttToken(tokens,'14','-',current);continue;break;
                 case '*': current = getToken(tokens,'15','*',current);continue;break;
                 case '/': current = getToken(tokens,'16','/',current);continue;break;
                 case '=': current = getToken(tokens,'17','=',current);continue;break;
@@ -222,8 +213,17 @@ let tokenizer = (input)  =>{
     log(rowColumn.row);
     if(errorStatus === 0){
         print(tokens);
-        return tokens;
+        finalResult.info = tokens;
+        console.log("看看  "+ finalResult);
+        return finalResult;
+    }else if(errorStatus === -2 || errorStatus === -3){
+        // changeFlag = 1;
+        return finalResult;
     }
+
+    // if(changeFlag === 1){
+    //     finalResult.error = false;
+    // }
 };
 
 // export  {tokenizer};
