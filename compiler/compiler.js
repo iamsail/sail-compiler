@@ -9,25 +9,47 @@ let getToken = (tokens,type,value,current) =>{
     return current;
 };
 
+let finalResult = {
+    error: true,
+    info : null
+}
+
+
 let log = console.log.bind(console);
 
 let logError = (errorStatus,row,column) =>{
+
+    // if(errorStatus === -2){
+    //     log("lexical analysis error,your enter is error!");
+    //     log("Error at  " + row + ":" + column);
+    // }
+    //
+    // if(errorStatus === -3){
+    //     log("your variableName is error");
+    //     log("Error at  " + row + ":" + column);
+    // }
+
+    let errorLogs = "";
+
+
     if(errorStatus === -2){
-        log("lexical analysis error,your enter is error!");
-        log("Error at  " + row + ":" + column);
+        // log("lexical analysis error,your enter is error!");
+        // log("Error at  " + row + ":" + column);
+        errorLogs += `lexical analysis error,your enter is error!\nError at  ${row}:${column}`;
+        return errorLogs;
     }
 
     if(errorStatus === -3){
-        log("your variableName is error");
-        log("Error at  " + row + ":" + column);
+        // log("your variableName is error");
+        // log("Error at  " + row + ":" + column);
+        errorLogs += `your variableName is error!Error at  ${row}:${column}`;
+        return errorLogs;
     }
+
+
 };
 
-// let print = (tokens) =>{
-//     for (let index of tokens.keys()) {
-//         log("(" + tokens[index].type + " ," + tokens[index].value +" )" );
-//     }
-// };
+
 
 let tokenizer = (input)  =>{
     let current = 0; // 这个是指针
@@ -41,6 +63,7 @@ let tokenizer = (input)  =>{
         let char = input[current];
 
         if(char === '\n'){
+            console.log("加一次");
             rowColumn.row++;
             rowColumn.column = 0;
         }else{

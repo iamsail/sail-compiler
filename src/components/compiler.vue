@@ -27,7 +27,7 @@
 
         <el-button-group>
             <el-button type="primary" size="medium"   v-on:click="compile"   icon="el-icon-caret-right"></el-button>
-            <el-button type="primary" size="medium"  icon="el-icon-delete"></el-button>
+            <el-button type="primary" size="medium"  v-on:click="del" icon="el-icon-delete"></el-button>
         </el-button-group>
         <div style="margin: 20px 0;"></div>
         <h2>{{myInfo}}</h2>
@@ -61,6 +61,10 @@
                 console.log(resultString);
                 this.textarea2 =  resultString;
 //                console.log(this.textarea2);
+            },
+            del:function(){
+                this.textarea2 = "";
+                this.textarea3 = "";
             }
         }
     }
