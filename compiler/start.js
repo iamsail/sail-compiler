@@ -3,18 +3,17 @@ let {tokenizer } = require ('./compiler');
 let {deleteComment } = require ('./deleteComment');
 
 
-let input = "//ab123@c\n" +
-    "//ab123@c\n" +
-    "hello world 1243\n" +
-    "/* fefe\n" +
-    "312fdabcd\n" +
-    "*/\n" +
-    "include iostream";
 
 
+let start = (input) => {
 
-input = deleteComment(input);
+    input = deleteComment(input);
 
-console.log("注释处理完毕  " + input);
+    console.log("注释处理完毕  " + input);
 
-tokenizer(input);
+    tokenizer(input);
+
+}
+
+
+module.exports = {start};

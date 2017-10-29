@@ -17,7 +17,7 @@
                         type="textarea"
                         :autosize="{ minRows: 30, maxRows: 50}"
                         placeholder="the result"
-                        v-model="textarea3"
+                        v-model="textarea2"
                 >
                 </el-input>
             </div></el-col>
@@ -26,7 +26,7 @@
         <div style="margin: 20px 0;"></div>
 
         <el-button-group>
-            <el-button type="primary" size="medium"   icon="el-icon-loading"></el-button>
+            <el-button type="primary" size="medium"   v-on:click="compile"   icon="el-icon-caret-right"></el-button>
             <el-button type="primary" size="medium"  icon="el-icon-delete"></el-button>
         </el-button-group>
 
@@ -34,18 +34,24 @@
 </template>
 
 <script>
+    let {hello } = require ('./test');
+    let {start } = require ('../../compiler/start');
     export default {
         name: 'compiler',
         data() {
-
             return {
                 test: "hehe",
                 textarea2: '',
                 textarea3: ''
             }
+        },
+        methods:{
+            compile:function(event){
+                console.log(this.textarea3);
+                start(this.textarea3);
+            }
         }
     }
-
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
