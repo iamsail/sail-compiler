@@ -1,3 +1,6 @@
+let {print } = require ('./print');
+
+
 let getToken = (tokens,type,value,current) =>{
     tokens.push({
         type: type,
@@ -21,11 +24,11 @@ let logError = (errorStatus,row,column) =>{
     }
 };
 
-let print = (tokens) =>{
-    for (let index of tokens.keys()) {
-        log("(" + tokens[index].type + " ," + tokens[index].value +" )" );
-    }
-};
+// let print = (tokens) =>{
+//     for (let index of tokens.keys()) {
+//         log("(" + tokens[index].type + " ," + tokens[index].value +" )" );
+//     }
+// };
 
 let tokenizer = (input)  =>{
     let current = 0; // 这个是指针

@@ -15,7 +15,6 @@ let deleteMultiLine = (input) => {
 
 
 let deleteComment = (input) => {
-
     // return deleteSingleLine(input);
     return deleteMultiLine(deleteSingleLine(input));
 };
