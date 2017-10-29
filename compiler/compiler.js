@@ -14,13 +14,9 @@ let getToken = (tokens,type,value,current) =>{
     return current;
 };
 
-
-
 let log = console.log.bind(console);
 
 let logError = (errorStatus,row,column) =>{
-
-
 
     finalResult.error = true;
     let errorLogs = "";
@@ -28,8 +24,6 @@ let logError = (errorStatus,row,column) =>{
         errorLogs += `lexical analysis error,your enter is error!\nError at  ${row}:${column}`;
         finalResult.info = errorLogs;
     }
-
-
 
     if(errorStatus === -3){
         errorLogs += `your variableName is error!Error at  ${row}:${column}`;
@@ -212,18 +206,14 @@ let tokenizer = (input)  =>{
     }
     log(rowColumn.row);
     if(errorStatus === 0){
-        print(tokens);
+        // print(tokens);
         finalResult.info = tokens;
-        console.log("看看  "+ finalResult);
         return finalResult;
     }else if(errorStatus === -2 || errorStatus === -3){
-        // changeFlag = 1;
         return finalResult;
     }
 
-    // if(changeFlag === 1){
-    //     finalResult.error = false;
-    // }
+
 };
 
 // export  {tokenizer};

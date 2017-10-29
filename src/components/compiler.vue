@@ -55,18 +55,18 @@
                 console.log(temp);
 
                 if(!temp.error){
-                    console.log("正确");
+                    let resultString="";
+                    temp.info.forEach(function(item){
+                        resultString += `(${item.type},${item.value})\n`;
+                    })
+                    this.textarea2 =  resultString;
                 }
                 else{
-                    console.log("错误");
+                    let resultString="";
+                    resultString += temp.info;
+                    this.textarea2 =  resultString;
                 }
 
-
-//                let resultString="";
-//                temp.forEach(function(item){
-//                    resultString += `(${item.type},${item.value})\n`;
-//                })
-//                this.textarea2 =  resultString;
             },
             del:function(){
                 this.textarea2 = "";
