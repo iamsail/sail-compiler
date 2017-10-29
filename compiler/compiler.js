@@ -94,8 +94,18 @@ let tokenizer = (input)  =>{
                 rowColumn.column++;
             }
 
-            // 之后我们把 number 类型的 token 储存起来,这里书上是使用的13
-            tokens.push({ type: 'number', value:value });
+            log("此时这个char是" + char);
+
+            // 数字过后是空白才合格
+            if(WHITESPACE.test(char)){
+                // 之后我们把 number 类型的 token 储存起来,这里书上是使用的13
+                tokens.push({ type: 'number', value:value });
+            }else{
+                rowColumn.column++;
+                errorStatus = -3;logError(errorStatus,rowColumn.row,rowColumn.column);break;
+            }
+
+
 
             // 再进行下一次循环
             continue;
