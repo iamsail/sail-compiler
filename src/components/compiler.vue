@@ -29,25 +29,38 @@
             <el-button type="primary" size="medium"   v-on:click="compile"   icon="el-icon-caret-right"></el-button>
             <el-button type="primary" size="medium"  icon="el-icon-delete"></el-button>
         </el-button-group>
-
+        <div style="margin: 20px 0;"></div>
+        <h2>{{myInfo}}</h2>
     </div>
 </template>
 
 <script>
     let {start } = require ('../../compiler/start');
+    let {print } = require ('../../compiler/print');
     export default {
         name: 'compiler',
         data() {
             return {
-                test: "hehe",
+                myInfo: "李长航 计科二班 08153398",
                 textarea2: '',
                 textarea3: ''
             }
         },
         methods:{
-            compile:function(event){
+            compile:function(){
+                console.log("处理前 \n");
                 console.log(this.textarea3);
-                start(this.textarea3);
+
+                console.log("=========");
+                let temp = start(this.textarea3);
+                let resultString="";
+                temp.forEach(function(item){
+                    resultString += `(${item.type},${item.value})\n`;
+                })
+                console.log("=========");
+                console.log(resultString);
+                this.textarea2 =  resultString;
+//                console.log(this.textarea2);
             }
         }
     }

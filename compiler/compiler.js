@@ -1,6 +1,5 @@
 let {print } = require ('./print');
 
-
 let getToken = (tokens,type,value,current) =>{
     tokens.push({
         type: type,
@@ -200,6 +199,7 @@ let tokenizer = (input)  =>{
     log(rowColumn.row);
     if(errorStatus === 0){
         print(tokens);
+        return tokens;
     }
 };
 
