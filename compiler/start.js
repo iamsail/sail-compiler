@@ -5,9 +5,8 @@ let {deleteComment } = require ('./deleteComment');
 
 
 let start = (input) => {
-    // input = deleteComment(input);
-    // console.log("注释处理完毕  " + input);
-    // tokenizer(input);
+    input = deleteComment(input);
+    console.log("注释处理完毕  " + input);
     let finalResult = tokenizer(input);
     return finalResult;
 }
@@ -29,10 +28,9 @@ module.exports = {start};
 // let {tokenizer } = require ('./compiler');
 // let {deleteComment } = require ('./deleteComment');
 //
-// let input ="hello \n" +
-//     "world\n" +
-//     "123\n" +
-//     "456";
+// let input="include iostream\n" +
+//     "fwe\n" +
+//     "//fefe";
 //
 //     input = deleteComment(input);
 //     console.log("注释处理完毕  " + input);

@@ -206,7 +206,7 @@ let tokenizer = (input)  =>{
     }
     log(rowColumn.row);
     if(errorStatus === 0){
-        // print(tokens);
+        print(tokens);
         finalResult.info = tokens;
         return finalResult;
     }else if(errorStatus === -2 || errorStatus === -3){
