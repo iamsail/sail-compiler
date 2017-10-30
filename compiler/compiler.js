@@ -159,8 +159,8 @@ let tokenizer = (input)  =>{
 
         // let input = "abcd";
         let firstLetter =  /(_|[a-z])/i;
-        // let variableName = /(_|[a-z])(_|[a-z]|[0-9])/i;
-        let variableName = /[a-z]/;
+        // let variableName = /[a-z]/;
+        let variableName = /(_|[a-z]|[0-9])/i;
 
 
 
