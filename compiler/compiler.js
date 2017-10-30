@@ -175,14 +175,14 @@ let tokenizer = (input)  =>{
             //TODO:最后对变量名进行处理,但是不能等于undefined
 
          while (variableName.test(char)) {
-             if(char === '\n'){ rowColumn.row++;  }
+             if(char === '\n'){ rowColumn.row++;rowColumn.column = 1;  }
 
 
              if(char !== undefined){
                  value += char;
                  char = input[++current];
                  if(char !== undefined){
-                     if(char === '\n'){ rowColumn.row++;  }
+                     if(char === '\n'){ rowColumn.row++;rowColumn.column = 1;  }
                      let WHITESPACE = /\s/;
                      if (WHITESPACE.test(char)) {
                          //TODO:就是这一行,导致定位不准确,总算搞定了
