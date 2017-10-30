@@ -32,6 +32,24 @@ let logError = (errorStatus,row,column) =>{
 };
 
 
+let keywordsList = (value) =>{
+    // let type = 'variable';
+    let type;
+    switch (value) {
+        case 'if':      type = 3;break;
+        case 'then':    type = 4;break;
+        case 'else':    type = 5;break;
+        case 'end':     type = 6;break;
+        case 'repeat':  type = 7;break;
+        case 'until':   type = 8;break;
+        case 'read':    type = 9;break;
+        case 'write':   type = 10;break;
+        default:        type = 'variabe';break;
+    }
+    return  type;
+};
+
+
 
 let tokenizer = (input)  =>{
     finalResult.error = false;
@@ -213,7 +231,9 @@ let tokenizer = (input)  =>{
                  break;}
          }
 
-         tokens.push({ type: 'variable', value });
+
+         tokens.push({ type: keywordsList(value), value });
+         // tokens.push({ type: 'variable', value });
             rowColumn.column++;
             char = input[++current];
             continue;
