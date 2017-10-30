@@ -46,15 +46,15 @@ let tokenizer = (input)  =>{
     while(current < input.length && errorStatus===0 ){
         let char = input[current];
 
+        //对列追踪的修复
+        let tempCurrent = current - 1;
+        if(input[tempCurrent] === '\n'){
+            rowColumn.column = 1;
+        }
+        tempCurrent = null;
 
-        console.log(`orz|${char}|`);
 
-        // abc 123
-        // 123 abc
-        // hello w
-        // 45
-
-
+        console.log(`orz|${char}| ${rowColumn.column} `);
 
 
         // if(char === '\n' ){
@@ -113,7 +113,7 @@ let tokenizer = (input)  =>{
                 // 之后我们把 number 类型的 token 储存起来,这里书上是使用的13
                 tokens.push({ type: 'number', value:value });
             }else{
-                rowColumn.column++;
+                // rowColumn.column++;
                 errorStatus = -3;logError(errorStatus,rowColumn.row,rowColumn.column);break;
             }
 
@@ -175,14 +175,16 @@ let tokenizer = (input)  =>{
             //TODO:最后对变量名进行处理,但是不能等于undefined
 
          while (variableName.test(char)) {
-             if(char === '\n'){ rowColumn.row++;rowColumn.column = 1;  }
+             // if(char === '\n'){ rowColumn.row++;rowColumn.column = 1;  }
+             if(char === '\n'){ rowColumn.row++;rowColumn.column = 1;break;  }
 
 
              if(char !== undefined){
                  value += char;
                  char = input[++current];
                  if(char !== undefined){
-                     if(char === '\n'){ rowColumn.row++;rowColumn.column = 1;  }
+                     // if(char === '\n'){ rowColumn.row++;rowColumn.column = 1;  }
+                     if(char === '\n'){ rowColumn.row++;rowColumn.column = 1;break;  }
                      let WHITESPACE = /\s/;
                      if (WHITESPACE.test(char)) {
                          //TODO:就是这一行,导致定位不准确,总算搞定了
