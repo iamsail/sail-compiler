@@ -35,7 +35,6 @@
 
 <script>
     let {start } = require ('../../compiler/start');
-    let {print } = require ('../../compiler/print');
     export default {
         name: 'compiler',
         data() {
@@ -47,18 +46,13 @@
         },
         methods:{
             compile:function(){
-//                console.log("处理前 \n");
-//                console.log(this.textarea3);
-//                console.log("===========");
-
                 let temp = start(this.textarea3);
-                console.log(temp);
 
                 if(!temp.error){
                     let resultString="";
                     temp.info.forEach(function(item){
                         resultString += `(${item.type},${item.value})\n`;
-                    })
+                    });
                     this.textarea2 =  resultString;
                 }
                 else{
@@ -123,6 +117,9 @@
         background-color: #f9fafc;
     }
 
+    .error{
+        background: red;
+    }
 </style>
 
 

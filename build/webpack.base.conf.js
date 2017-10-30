@@ -28,6 +28,11 @@ module.exports = {
   },
   module: {
     rules: [
+        // {
+        //     test: /\.js$/,
+        //     loader: 'babel-loader',
+        //     include: [resolve('src'), resolve('test'),resolve('node_modules/vue-bulma-tooltip')]
+        // },
       {
         test: /\.vue$/,
         loader: 'vue-loader',
