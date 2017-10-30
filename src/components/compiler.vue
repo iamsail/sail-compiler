@@ -34,7 +34,7 @@
 </template>
 
 <script>
-    let {start } = require ('../../compiler/start');
+    let {start } = require ('../compiler/start');
     export default {
         name: 'compiler',
         data() {
