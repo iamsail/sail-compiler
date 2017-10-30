@@ -5,8 +5,9 @@
       <el-submenu index="2">
         <template slot="title">编译中心</template>
         <el-menu-item index="2-1">词法分析</el-menu-item>
-        <el-menu-item index="2-2">语法分析</el-menu-item>
-        <el-menu-item index="2-3">AST</el-menu-item>
+        <el-menu-item index="2-2">递归下降语法分析</el-menu-item>
+        <el-menu-item index="2-2">算法优先语法分析</el-menu-item>
+        <el-menu-item index="2-2">LR语法分析</el-menu-item>
       </el-submenu>
       <el-menu-item index="3"><a href="https://github.com/iamsail/sail-compiler" target="_blank">Github</a></el-menu-item>
       <h1 class="name">{{ msg }}</h1>

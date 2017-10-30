@@ -3,7 +3,7 @@ let {print } = require ('./print');
 let finalResult = {
     error: false,
     info : ""
-}
+};
 
 let getToken = (tokens,type,value,current) =>{
     tokens.push({
@@ -161,12 +161,9 @@ let tokenizer = (input)  =>{
         }
 
 
-
-        // let input = "abcd";
         let firstLetter =  /(_|[a-z])/i;
         // let variableName = /[a-z]/;
         let variableName = /(_|[a-z]|[0-9])/i;
-
 
 
         // 以下是对标识符的处理,也就是对 用户 取的变量名的处理
@@ -231,7 +228,7 @@ let tokenizer = (input)  =>{
                 case '=': current = getToken(tokens,'17','=',current);continue;break;
                 case '<': current = getToken(tokens,'18','<',current);continue;break;
                 case ';': current = getToken(tokens,'19',';',current);continue;break;
-                default : errorStatus = -2;log("||" + char +"||");logError(errorStatus,rowColumn.row,rowColumn.column);break;
+                default : errorStatus = -2;log("|是它|" + char +"||");rowColumn.column--;logError(errorStatus,rowColumn.row,rowColumn.column);break;
             }
         }
 
