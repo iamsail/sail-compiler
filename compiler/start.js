@@ -6,7 +6,7 @@ let {deleteComment } = require ('./deleteComment');
 
 let start = (input) => {
     input = deleteComment(input);
-    console.log("注释处理完毕  " + input);
+    console.log("注释处理完毕  \n" + input);
     console.log("长度是 " + input.length);
     // let count = 0;
     // for(let i = 0 ; i  < input.length ; i++){

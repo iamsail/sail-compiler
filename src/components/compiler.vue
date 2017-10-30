@@ -47,9 +47,9 @@
         },
         methods:{
             compile:function(){
-                console.log("处理前 \n");
-                console.log(this.textarea3);
-                console.log("===========");
+//                console.log("处理前 \n");
+//                console.log(this.textarea3);
+//                console.log("===========");
 
                 let temp = start(this.textarea3);
                 console.log(temp);
