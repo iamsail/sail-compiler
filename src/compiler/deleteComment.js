@@ -20,4 +20,5 @@ let deleteComment = (input) => {
 };
 
 
-module.exports = {deleteComment};
+// module.exports = {deleteComment};
+export {deleteComment};

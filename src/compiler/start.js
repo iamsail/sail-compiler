@@ -1,7 +1,8 @@
-let {tokenizer } = require ('./compiler');
-let {deleteComment } = require ('./deleteComment');
+// let {tokenizer } = require ('./compiler');
+// let {deleteComment } = require ('./deleteComment');
 
-
+import {tokenizer}  from './compiler';
+import {deleteComment}  from './deleteComment';
 
 let start = (input) => {
     input = deleteComment(input);
@@ -13,7 +14,8 @@ let start = (input) => {
     return finalResult;
 };
 
-module.exports = {start};
+// module.exports = {start};
+export {start};
 
 
 

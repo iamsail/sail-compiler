@@ -6,4 +6,5 @@ let print = (tokens) =>{
     }
 };
 
-module.exports = {print};
+// module.exports = {print};
+export {print};

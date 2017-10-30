@@ -1,4 +1,8 @@
-let {print } = require ('./print');
+// let {print } = require ('./print');
+
+
+import {print}  from './print';
+
 
 let finalResult = {
     error: false,
@@ -266,7 +270,7 @@ let tokenizer = (input)  =>{
 
 };
 
-// export  {tokenizer};
-module.exports = {tokenizer};
+export  {tokenizer};
+// module.exports = {tokenizer};
 
 
