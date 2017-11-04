@@ -70,7 +70,8 @@
                     });
                     let resultString = `${startString}${tempString}`;
                     this.textarea2 =  resultString;
-                    this.analysis(tempString);
+                    let tempArray = temp.info;
+                    this.analysis(tempArray);
                 }
                 else{
                     let resultString="";
@@ -83,10 +84,16 @@
                 this.textarea2 = "";
                 this.textarea3 = "";
             },
-            analysis:function (tempString) {
+            analysis:function (tempArray) {
                 let startString ="语法分析结果如下:\n";
-                program(tempString);
-                this.textarea4 = `${startString}${tempString}`;
+                let analysisResult = program(tempArray);
+                if(!analysisResult.error){
+                    console.log("语法分析成功");
+                }else{
+                    console.log("语法分析失败");
+                }
+//                console.log(`语法分析结果如下\n ${analysisResult} \n=============\n`);
+                this.textarea4 = `${startString}${analysisResult.info}`;
             }
         }
     }

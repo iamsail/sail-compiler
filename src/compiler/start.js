@@ -11,10 +11,10 @@ let start = (input) => {
 
     let finalResult = tokenizer(input);
 
-    console.log("那我就打印一下咯\n");
-    finalResult.info.forEach(function(item){
-        console.log(`(${item.type},${item.value})\n`);
-    });
+    // console.log("那我就打印一下咯\n");
+    // finalResult.info.forEach(function(item){
+    //     console.log(`(${item.type},${item.value})\n`);
+    // });
 
     return finalResult;
 };

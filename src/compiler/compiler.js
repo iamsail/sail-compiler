@@ -1,8 +1,5 @@
 // let {print } = require ('./print');
-
-
 import {print}  from './print';
-
 
 let finalResult = {
     error: false,
@@ -35,7 +32,6 @@ let logError = (errorStatus,row,column) =>{
     }
 };
 
-
 let keywordsList = (value) =>{
     let type;
     switch (value) {
@@ -56,8 +52,6 @@ let keywordsList = (value) =>{
     }
     return  type;
 };
-
-
 
 let tokenizer = (input)  =>{
     finalResult.error = false;
@@ -290,15 +284,14 @@ let tokenizer = (input)  =>{
             continue;
         }
 
-
         else{
             switch (char){
-                case '+': current = getToken(tokens,'13','+',current);continue;break;
-                case '-': current = getToken(tokens,'14','-',current);continue;break;
-                case '*': current = getToken(tokens,'15','*',current);continue;break;
-                case '/': current = getToken(tokens,'16','/',current);continue;break;
-                case '=': current = getToken(tokens,'17','=',current);continue;break;
-                case ';': current = getToken(tokens,'19',';',current);continue;break;
+                case '+': current = getToken(tokens,'200','+',current);continue;break;
+                case '-': current = getToken(tokens,'201','-',current);continue;break;
+                case '*': current = getToken(tokens,'202','*',current);continue;break;
+                case '/': current = getToken(tokens,'203','/',current);continue;break;
+                case '=': current = getToken(tokens,'204','=',current);continue;break;
+                case ';': current = getToken(tokens,'205',';',current);continue;break;
                 case '(': current = getToken(tokens,'100','(',current);continue;break;
                 case ')': current = getToken(tokens,'101',')',current);continue;break;
                 default : errorStatus = -2;log("|是它|" + char +"||");rowColumn.column--;logError(errorStatus,rowColumn.row,rowColumn.column);break;
