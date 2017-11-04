@@ -47,6 +47,11 @@ let keywordsList = (value) =>{
         case 'until':   type = 8;break;
         case 'read':    type = 9;break;
         case 'write':   type = 10;break;
+        case 'while':   type = 11;break;
+        case 'for':     type = 12;break;
+        case 'float':   type = 13;break;
+        case 'int':     type = 14;break;
+        case 'break':   type = 15;break;
         default:        type = 'variabe';break;
     }
     return  type;
@@ -84,11 +89,11 @@ let tokenizer = (input)  =>{
         }
 
         if(char === '{'){
-            current = getToken(tokens,'20','{',current);
+            current = getToken(tokens,'102','{',current);
             continue;
         }
         if(char === '}'){
-            current = getToken(tokens,'21','}',current);
+            current = getToken(tokens,'103','}',current);
             continue;
         }
 
@@ -257,6 +262,35 @@ let tokenizer = (input)  =>{
             continue;
         }
 
+
+        if(char === "<"){
+            let value = char;
+            let nextChar = input[++current];
+            if(nextChar === "="){
+                value = `${value}=`;
+                current = getToken(tokens,'54',value,current);
+            }else{
+                current--;
+                current = getToken(tokens,'55',value,current);
+            }
+            continue;
+        }
+
+
+        if(char === ">"){
+            let value = char;
+            let nextChar = input[++current];
+            if(nextChar === "="){
+                value = `${value}=`;
+                current = getToken(tokens,'56',value,current);
+            }else{
+                current--;
+                current = getToken(tokens,'57',value,current);
+            }
+            continue;
+        }
+
+
         else{
             switch (char){
                 case '+': current = getToken(tokens,'13','+',current);continue;break;
@@ -264,10 +298,9 @@ let tokenizer = (input)  =>{
                 case '*': current = getToken(tokens,'15','*',current);continue;break;
                 case '/': current = getToken(tokens,'16','/',current);continue;break;
                 case '=': current = getToken(tokens,'17','=',current);continue;break;
-                case '<': current = getToken(tokens,'18','<',current);continue;break;
                 case ';': current = getToken(tokens,'19',';',current);continue;break;
-                case '(': current = getToken(tokens,'22','(',current);continue;break;
-                case ')': current = getToken(tokens,'23',')',current);continue;break;
+                case '(': current = getToken(tokens,'100','(',current);continue;break;
+                case ')': current = getToken(tokens,'101',')',current);continue;break;
                 default : errorStatus = -2;log("|是它|" + char +"||");rowColumn.column--;logError(errorStatus,rowColumn.row,rowColumn.column);break;
             }
         }
