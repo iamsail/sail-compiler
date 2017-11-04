@@ -5,6 +5,7 @@ let analysisString = {
 
 let program = () => {
     analysisString.info = `progarm-->block\n`;
+    return  analysisString;
 };
 
 

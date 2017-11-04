@@ -15,7 +15,7 @@ let start = (input) => {
     finalResult.info.forEach(function(item){
         console.log(`(${item.type},${item.value})\n`);
     });
-    // hello
+
     return finalResult;
 };
 

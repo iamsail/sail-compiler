@@ -1,7 +1,7 @@
 <template>
     <div class="hello">
         <el-row type="flex" class="row-bg" justify="space-around" >
-            <el-col :span="10"><div class="grid-content  bg-purple">
+            <el-col :span="7"><div class="grid-content  bg-purple">
                 <el-input
                         type="textarea"
                         :autosize="{ minRows: 30, maxRows: 50}"
@@ -11,15 +11,27 @@
                 </el-input>
 
             </div></el-col>
-            <el-col :span="10"><div class="grid-content bg-purple-light">
+            <el-col :span="6"><div class="grid-content bg-purple-light">
                 <el-input
                         type="textarea"
                         :autosize="{ minRows: 30, maxRows: 50}"
-                        placeholder="the result"
+                        placeholder="词法分析"
                         v-model="textarea2"
                 >
                 </el-input>
             </div></el-col>
+
+
+            <el-col :span="7"><div class="grid-content bg-purple-light">
+                <el-input
+                        type="textarea"
+                        :autosize="{ minRows: 30, maxRows: 50}"
+                        placeholder="语法分析"
+                        v-model="textarea4"
+                >
+                </el-input>
+            </div></el-col>
+
         </el-row>
 
         <div style="margin: 20px 0;"></div>
@@ -34,15 +46,16 @@
 </template>
 
 <script>
-//    let {start} = require ('../compiler/start');
     import {start}  from '../compiler/start';
+    import {program}  from '../compiler/RecursiveDecline/program';
     export default {
         name: 'compiler',
         data() {
             return {
                 myInfo: "李长航 计科二班 08153398",
                 textarea2: '',
-                textarea3: ''
+                textarea3: '',
+                textarea4: ''
             }
         },
         methods:{
@@ -50,11 +63,14 @@
                 let temp = start(this.textarea3);
 
                 if(!temp.error){
-                    let resultString="";
+                    let startString="词法分析结果如下:\n";
+                    let tempString = "";
                     temp.info.forEach(function(item){
-                        resultString += `(${item.type},${item.value})\n`;
+                        tempString += `(${item.type},${item.value})\n`;
                     });
+                    let resultString = `${startString}${tempString}`;
                     this.textarea2 =  resultString;
+                    this.analysis(tempString);
                 }
                 else{
                     let resultString="";
@@ -66,6 +82,11 @@
             del:function(){
                 this.textarea2 = "";
                 this.textarea3 = "";
+            },
+            analysis:function (tempString) {
+                let startString ="语法分析结果如下:\n";
+                program(tempString);
+                this.textarea4 = `${startString}${tempString}`;
             }
         }
     }
