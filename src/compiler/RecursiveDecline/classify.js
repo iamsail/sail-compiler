@@ -51,15 +51,16 @@ let classify = (tempArray) =>{
             case  item.type === "variabe":
                 classifyResult.identifierTable.push(item.value);
                 break;
-            case  item.type > 500:
-                classifyResult.otherCharTable.push(item.value);
-                break;
+            // case  item.type > 500:
+            //     classifyResult.otherCharTable.push(item.value);
+            //     break;
             default:
+                classifyResult.otherCharTable.push(item.value);
                 classifyResult.finalTable.push(item.value);
                 break;
         }
     });
-    print();
+    // print();
 };
 
 

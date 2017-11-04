@@ -83,6 +83,7 @@
             del:function(){
                 this.textarea2 = "";
                 this.textarea3 = "";
+                this.textarea4 = "";
             },
             analysis:function (tempArray) {
                 let startString ="语法分析结果如下:\n";
