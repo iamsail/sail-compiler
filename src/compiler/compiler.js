@@ -37,7 +37,6 @@ let logError = (errorStatus,row,column) =>{
 
 
 let keywordsList = (value) =>{
-    // let type = 'variable';
     let type;
     switch (value) {
         case 'if':      type = 3;break;
@@ -67,17 +66,13 @@ let tokenizer = (input)  =>{
 
     while(current < input.length && errorStatus===0 ){
         let char = input[current];
-
         //对列追踪的修复
         let tempCurrent = current - 1;
         if(input[tempCurrent] === '\n'){
             rowColumn.column = 1;
         }
         tempCurrent = null;
-
-
-        console.log(`orz|${char}| ${rowColumn.column} `);
-
+        // console.log(`orz|${char}| ${rowColumn.column} `);
 
         // if(char === '\n' ){
         if(char === '\n'){
@@ -89,11 +84,11 @@ let tokenizer = (input)  =>{
         }
 
         if(char === '{'){
-            current = getToken(tokens,'parent','{',current);
+            current = getToken(tokens,'20','{',current);
             continue;
         }
         if(char === '}'){
-            current = getToken(tokens,'parent','}',current);
+            current = getToken(tokens,'21','}',current);
             continue;
         }
 
@@ -128,7 +123,7 @@ let tokenizer = (input)  =>{
                 rowColumn.column++;
             }
 
-            log(`此时这个char是  ${char}   此时的长度是   ${current}   此时的value是   ${value}` );
+            // log(`此时这个char是  ${char}   此时的长度是   ${current}   此时的value是   ${value}` );
 
             // if(char === undefined){
             if(current === input.length){
@@ -136,15 +131,27 @@ let tokenizer = (input)  =>{
                 break;
             }
 
-                // 数字过后是空白才合格
-                if(WHITESPACE.test(char)){
-                    // 之后我们把 number 类型的 token 储存起来,这里书上是使用的13
-                    tokens.push({ type: 'number', value:value });
-                }else{
-                    // rowColumn.column++;
-                    errorStatus = -3;logError(errorStatus,rowColumn.row,rowColumn.column);break;
-                }
+                // // 数字过后是空白才合格
+                // if(WHITESPACE.test(char)){
+                //     // 之后我们把 number 类型的 token 储存起来,这里书上是使用的13
+                //     tokens.push({ type: 'number', value:value });
+                // }else{
+                //     // rowColumn.column++;
+                //     errorStatus = -3;logError(errorStatus,rowColumn.row,rowColumn.column);break;
+                // }
 
+            // let NUMBER = /[0-9]|;/;
+            let NumberEnd = /\s|;|}|{|\)|\(|=|!/;
+
+            let result1 = WHITESPACE.test(char);
+            // 数字过后是空白才合格
+            if(NumberEnd.test(char)){
+                // 之后我们把 number 类型的 token 储存起来,这里书上是使用的13
+                tokens.push({ type: 'number', value:value });
+            }else{
+                // rowColumn.column++;
+                errorStatus = -3;logError(errorStatus,rowColumn.row,rowColumn.column);break;
+            }
 
             // 再进行下一次循环
             continue;
@@ -184,7 +191,6 @@ let tokenizer = (input)  =>{
 
 
         let firstLetter =  /(_|[a-z])/i;
-        // let variableName = /[a-z]/;
         let variableName = /(_|[a-z]|[0-9])/i;
 
 
@@ -199,15 +205,13 @@ let tokenizer = (input)  =>{
             //TODO:最后对变量名进行处理,但是不能等于undefined
 
          while (variableName.test(char)) {
-             // if(char === '\n'){ rowColumn.row++;rowColumn.column = 1;  }
              if(char === '\n'){ rowColumn.row++;rowColumn.column = 1;break;  }
-
 
              if(char !== undefined){
                  value += char;
                  char = input[++current];
+
                  if(char !== undefined){
-                     // if(char === '\n'){ rowColumn.row++;rowColumn.column = 1;  }
                      if(char === '\n'){ rowColumn.row++;rowColumn.column = 1;break;  }
                      let WHITESPACE = /\s/;
                      if (WHITESPACE.test(char)) {
@@ -215,20 +219,31 @@ let tokenizer = (input)  =>{
                          // current++;
                          break;
                      }
-                     let variableResult = variableName.test(char);
 
-                     if(variableResult){
-                         rowColumn.column++;
-                     }else{
-                         rowColumn.column ++;
-                         // errorStatus = -3;log("||" + char +"||");logError(errorStatus,rowColumn.row,rowColumn.column);break;
-                         errorStatus = -3;logError(errorStatus,rowColumn.row,rowColumn.column);break;
-                     }
+                     let variableName = /(_|[a-z]|[0-9])/i;
+                     let variableNameMore = /({|}|\(|\)|;|,)/i;
+                     let variableResult = variableNameMore.test(char);
+
+
+                     // if(variableResult){
+                     //     // rowColumn.column++;
+                     // }else{
+                     //     // rowColumn.column ++;
+                     //     // errorStatus = -3;
+                     //     // logError(errorStatus,rowColumn.row,rowColumn.column);
+                     //     break;
+                     // }
+
+                    // if(!Result){break;}
+
+                    if(variableResult){
+                           current--;
+                           break;
+                    }
+
                  } else if(rowColumn.column === input.length){ //处理完字符串
                      break;
                  }else{
-                     // log("column    length   " + rowColumn.column  + "   "+input.length);
-                     // errorStatus = -2;log("||" + char +"||");logError(errorStatus,rowColumn.row,rowColumn.column);break;
                     break;
                  }
              }else{
@@ -237,7 +252,6 @@ let tokenizer = (input)  =>{
 
 
          tokens.push({ type: keywordsList(value), value });
-         // tokens.push({ type: 'variable', value });
             rowColumn.column++;
             char = input[++current];
             continue;
@@ -246,19 +260,22 @@ let tokenizer = (input)  =>{
         else{
             switch (char){
                 case '+': current = getToken(tokens,'13','+',current);continue;break;
-                case '-': current = gefinalResulttToken(tokens,'14','-',current);continue;break;
+                case '-': current = getToken(tokens,'14','-',current);continue;break;
                 case '*': current = getToken(tokens,'15','*',current);continue;break;
                 case '/': current = getToken(tokens,'16','/',current);continue;break;
                 case '=': current = getToken(tokens,'17','=',current);continue;break;
                 case '<': current = getToken(tokens,'18','<',current);continue;break;
                 case ';': current = getToken(tokens,'19',';',current);continue;break;
+                case '(': current = getToken(tokens,'22','(',current);continue;break;
+                case ')': current = getToken(tokens,'23',')',current);continue;break;
                 default : errorStatus = -2;log("|是它|" + char +"||");rowColumn.column--;logError(errorStatus,rowColumn.row,rowColumn.column);break;
             }
         }
 
         current++;
     }
-    log(rowColumn.row);
+    // log(rowColumn.row);
+    log("   ===============代码行数===============     "  + rowColumn.row);
     if(errorStatus === 0){
         print(tokens);
         finalResult.info = tokens;
