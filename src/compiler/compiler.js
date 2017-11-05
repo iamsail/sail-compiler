@@ -48,6 +48,7 @@ let keywordsList = (value) =>{
         case 'float':   type = 13;break;
         case 'int':     type = 14;break;
         case 'break':   type = 15;break;
+        case 'do':      type = 16;break;
         default:        type = 'variabe';break;
     }
     return  type;
@@ -262,10 +263,10 @@ let tokenizer = (input)  =>{
             let nextChar = input[++current];
             if(nextChar === "="){
                 value = `${value}=`;
-                current = getToken(tokens,'54',value,current);
+                current = getToken(tokens,'54',value,current);  // <=
             }else{
                 current--;
-                current = getToken(tokens,'55',value,current);
+                current = getToken(tokens,'55',value,current);  // <
             }
             continue;
         }
@@ -276,10 +277,10 @@ let tokenizer = (input)  =>{
             let nextChar = input[++current];
             if(nextChar === "="){
                 value = `${value}=`;
-                current = getToken(tokens,'56',value,current);
+                current = getToken(tokens,'56',value,current); // >=
             }else{
                 current--;
-                current = getToken(tokens,'57',value,current);
+                current = getToken(tokens,'57',value,current); // >
             }
             continue;
         }
@@ -303,7 +304,7 @@ let tokenizer = (input)  =>{
     // log(rowColumn.row);
     log("   ===============代码行数===============     "  + rowColumn.row);
     if(errorStatus === 0){
-        print(tokens);
+        // print(tokens);
         finalResult.info = tokens;
         return finalResult;
     }else if(errorStatus === -2 || errorStatus === -3){
