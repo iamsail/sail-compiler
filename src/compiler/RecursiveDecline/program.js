@@ -245,6 +245,7 @@ let term1 = () =>{
 };
 
 
+
 let factor = () =>{
     if(analysisString.error){
         return;
