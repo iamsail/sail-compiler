@@ -1,4 +1,9 @@
-import {classify}  from './classify';
+// import {classify}  from './classify';
+import {rightCount}  from '../compiler';
+let log = console.log.bind(console);
+
+let countRightBracket = 0;
+
 
 let analysisString = {
     error : false,
@@ -9,7 +14,6 @@ let analysisString = {
 //记录进行语法分析的数组的当前元素下标
 let tempArrayIndex = 0;
 
-let log = console.log.bind(console);
 
 let error = () => {
     analysisString.error = true;
@@ -17,14 +21,18 @@ let error = () => {
 };
 
 let match = (char) => {
-    // if(char === analysisString.tempArray[tempArrayIndex].value){
     if(char === analysisString.tempArray[tempArrayIndex].value || char === analysisString.tempArray[tempArrayIndex].type){
         log(`${char} 匹配成功了`);
         tempArrayIndex++;
     }else if(char !== analysisString.tempArray[tempArrayIndex].value || char !== analysisString.tempArray[tempArrayIndex].type){
-        log(`${char} 匹配 ${analysisString.tempArray[tempArrayIndex].value} 失败了。
-        此时的下标是 ${tempArrayIndex}   `);
-        analysisString.error = true;
+
+        // if(char !== "{"){
+
+            log(`${char} 匹配 ${analysisString.tempArray[tempArrayIndex].value} 失败了。
+            此时的下标是 ${tempArrayIndex}   `);
+            analysisString.error = true;
+        // }
+
     }
     //进行语法分析的数组的当前元素下标后移
 };
@@ -33,24 +41,32 @@ let program = (tempArray) => {
     //TODO:这个tempArray应该需要过滤一下,过滤为终止符号的数组列表
     analysisString.tempArray = tempArray;
     analysisString.tempArray.forEach(function(item){
-        log(`(${item.type},${item.value})=============\n`);
+        log(`(${item.type},${item.value})\n`);
     });
 
     //分类到各个表中
-    classify(tempArray);
+    // classify(tempArray);
     analysisString.info = `progarm ===> block\n`;
+
     block();
-    log("此处返回");
     return  analysisString;
 };
 
 let block = () => {
+    countRightBracket++;
+    log(`countRightBracket  rightCount  ${countRightBracket}   ${rightCount}`);
+    if(countRightBracket > rightCount){log("执行此处");   analysisString.error = true;}
+
+    if(analysisString.error){
+        return;
+    }
+    
+    log("================================block函数被调用了=====================");
     analysisString.info = `${analysisString.info}  block ===> {stmts}\n`;
     match("{");
     stmts();
-    log("回到原点了吗");
+    // log("回到原点了吗");
     match("}");
-
 };
 
 
@@ -73,6 +89,7 @@ let stmt = () => {
     if(analysisString.error){
         return;
     }
+    //TODO: 会不会是true导致的问题
     switch (true){
         case analysisString.tempArray[tempArrayIndex].type === "variabe":
             analysisString.info = `${analysisString.info}  stmt ===> variabe = expr;\n`;
@@ -121,7 +138,8 @@ let stmt = () => {
             break;
         default:
             analysisString.info += `   stmt ===> block\n`;
-            block();
+            log("是在此处  3  调用block 函数的");
+                block();
             break;
     }
 };
@@ -130,9 +148,7 @@ let bool = () => {
     if(analysisString.error){
         return;
     }
-    log("============2333,到这儿了");
     expr();
-    log(`============2333,   回到这儿了  ${analysisString.tempArray[tempArrayIndex].type}`);
 
     switch (true){
         case analysisString.tempArray[tempArrayIndex].type === 55:
@@ -142,7 +158,6 @@ let bool = () => {
             break;
         case analysisString.tempArray[tempArrayIndex].type === "54":
         // case analysisString.tempArray[tempArrayIndex].type == 54:
-            log(`是 <= ?是 <= ?是 <= ?是 <= ?是 <= ?是 <= ?是 <= ?是 <= ?是 <= ?`);
             analysisString.info += `   bool ===> expr <= expr\n`;
             match("<=");
             expr();
@@ -158,7 +173,6 @@ let bool = () => {
             expr();
             break;
         default:
-            log("不会跑到这儿了吧");
             analysisString.info += `   bool ===> expr\n`;
             expr();
             break;
@@ -169,7 +183,6 @@ let expr = () =>{
     if(analysisString.error){
         return;
     }
-    log("来了");
     analysisString.info += `   expr ===> term expr1\n`;
     term();
     expr1();
@@ -214,7 +227,6 @@ let term = () =>{
 
 let term1 = () =>{
     if(analysisString.error){
-        log("在这儿就返回了");
         return;
     }
 

@@ -3,8 +3,11 @@ import {print}  from './print';
 
 let finalResult = {
     error: false,
-    info : ""
+    info : "",
 };
+
+
+let rightCount = 0;
 
 let getToken = (tokens,type,value,current) =>{
     tokens.push({
@@ -55,6 +58,8 @@ let keywordsList = (value) =>{
 };
 
 let tokenizer = (input)  =>{
+    let rightBracket = 0;
+
     finalResult.error = false;
     let current = 0; // 这个是指针
     let tokens = [];
@@ -85,6 +90,8 @@ let tokenizer = (input)  =>{
 
         if(char === '{'){
             current = getToken(tokens,'102','{',current);
+            rightBracket++;
+            log("我增加了   1          =============");
             continue;
         }
         if(char === '}'){
@@ -306,6 +313,7 @@ let tokenizer = (input)  =>{
     if(errorStatus === 0){
         // print(tokens);
         finalResult.info = tokens;
+        rightCount = rightBracket;
         return finalResult;
     }else if(errorStatus === -2 || errorStatus === -3){
         return finalResult;
@@ -314,7 +322,7 @@ let tokenizer = (input)  =>{
 
 };
 
-export  {tokenizer};
+export  {tokenizer,rightCount};
 // module.exports = {tokenizer};
 
 
