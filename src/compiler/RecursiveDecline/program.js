@@ -4,7 +4,6 @@ let log = console.log.bind(console);
 
 let countRightBracket = 0;
 
-
 let analysisString = {
     error : false,
     info: "",
@@ -13,7 +12,6 @@ let analysisString = {
 
 //记录进行语法分析的数组的当前元素下标
 let tempArrayIndex = 0;
-
 
 let error = () => {
     analysisString.error = true;
@@ -25,14 +23,9 @@ let match = (char) => {
         log(`${char} 匹配成功了`);
         tempArrayIndex++;
     }else if(char !== analysisString.tempArray[tempArrayIndex].value || char !== analysisString.tempArray[tempArrayIndex].type){
-
-        // if(char !== "{"){
-
             log(`${char} 匹配 ${analysisString.tempArray[tempArrayIndex].value} 失败了。
             此时的下标是 ${tempArrayIndex}   `);
             analysisString.error = true;
-        // }
-
     }
     //进行语法分析的数组的当前元素下标后移
 };
@@ -40,27 +33,29 @@ let match = (char) => {
 let program = (tempArray) => {
     //TODO:这个tempArray应该需要过滤一下,过滤为终止符号的数组列表
     analysisString.tempArray = tempArray;
-    analysisString.tempArray.forEach(function(item){
-        log(`(${item.type},${item.value})\n`);
-    });
 
     //分类到各个表中
     // classify(tempArray);
     analysisString.info = `progarm ===> block\n`;
 
     block();
+
+    log("回到了起点");
     return  analysisString;
 };
 
 let block = () => {
-    countRightBracket++;
-    log(`countRightBracket  rightCount  ${countRightBracket}   ${rightCount}`);
-    if(countRightBracket > rightCount){log("执行此处");   analysisString.error = true;}
+    if(rightCount !== 0){
+        countRightBracket++;
+        log(`countRightBracket  rightCount  ${countRightBracket}   ${rightCount}`);
+        if(countRightBracket > rightCount){log("执行此处");   analysisString.error = true;}
+    }
+
 
     if(analysisString.error){
         return;
     }
-    
+
     log("================================block函数被调用了=====================");
     analysisString.info = `${analysisString.info}  block ===> {stmts}\n`;
     match("{");
@@ -92,7 +87,7 @@ let stmt = () => {
     //TODO: 会不会是true导致的问题
     switch (true){
         case analysisString.tempArray[tempArrayIndex].type === "variabe":
-            analysisString.info = `${analysisString.info}  stmt ===> variabe = expr;\n`;
+            analysisString.info = `${analysisString.info}   stmt ===> variabe = expr;\n`;
             // log("调用了这儿0===");
             match("variabe");
             match("=");
@@ -151,7 +146,7 @@ let bool = () => {
     expr();
 
     switch (true){
-        case analysisString.tempArray[tempArrayIndex].type === 55:
+        case analysisString.tempArray[tempArrayIndex].type === "55":
             analysisString.info += `   bool ===> expr < expr\n`;
             match("<");
             expr();
@@ -162,12 +157,12 @@ let bool = () => {
             match("<=");
             expr();
             break;
-        case analysisString.tempArray[tempArrayIndex].type === 57:
+        case analysisString.tempArray[tempArrayIndex].type === "57":
             analysisString.info += `   bool ===> expr > expr\n`;
             match(">");
             expr();
             break;
-        case analysisString.tempArray[tempArrayIndex].type === 56:
+        case analysisString.tempArray[tempArrayIndex].type === "56":
             analysisString.info += `   bool ===> expr >= expr\n`;
             match(">=");
             expr();
@@ -195,19 +190,19 @@ let expr1 = () => {
     switch (true){
         // case analysisString.tempArray[tempArrayIndex].type === 200:
         case analysisString.tempArray[tempArrayIndex].type === "200":
-            analysisString.info += `   expr1 ===> + term expr1\n`;
+            analysisString.info += `  expr1 ===> + term expr1\n`;
             match("+");
             term();
             expr1();
             break;
-        case analysisString.tempArray[tempArrayIndex].type === 201:
-            analysisString.info += `   expr1 ===> - term expr1\n`;
+        case analysisString.tempArray[tempArrayIndex].type === "201":
+            analysisString.info += `  expr1 ===> - term expr1\n`;
             match("-");
             term();
             expr1();
             break;
         default:
-            analysisString.info += `   expr1 ===> - null\n`;
+            analysisString.info += `  expr1 ===> - null\n`;
             return;
     }
 };
@@ -231,20 +226,20 @@ let term1 = () =>{
     }
 
     switch (true){
-        case analysisString.tempArray[tempArrayIndex].type === 202:
+        case analysisString.tempArray[tempArrayIndex].type === "202":
             analysisString.info += `   term1 ===> * factor term1\n`;
             match("*");
             factor();
             term1();
             break;
-        case analysisString.tempArray[tempArrayIndex].type === 203:
+        case analysisString.tempArray[tempArrayIndex].type === "203":
             analysisString.info += `   term1 ===> / factor term1\n`;
             match("/");
             factor();
             term1();
             break;
         default:
-            analysisString.info += `   term1 ===> null\n`;
+            analysisString.info += `  term1 ===> null\n`;
             return;
     }
 };
@@ -262,12 +257,12 @@ let factor = () =>{
             match(")");
             break;
         case analysisString.tempArray[tempArrayIndex].type === "variabe":
-            analysisString.info += `   factor ===> variabe\n`;
+            analysisString.info += ` factor ===> variabe\n`;
 
             match("variabe");
             break;
         case analysisString.tempArray[tempArrayIndex].type === "number":
-            analysisString.info += `   factor ===> number\n`;
+            analysisString.info += ` factor ===> number\n`;
             match("number");
             break;
         default:

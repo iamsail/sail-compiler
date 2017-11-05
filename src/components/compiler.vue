@@ -71,6 +71,7 @@
                     let resultString = `${startString}${tempString}`;
                     this.textarea2 =  resultString;
                     let tempArray = temp.info;
+                    console.log("这儿呢");
                     this.analysis(tempArray);
                 }
                 else{
@@ -86,7 +87,9 @@
                 this.textarea4 = "";
             },
             analysis:function (tempArray) {
+                let errorInfo = "语法分析失败";
                 let startString ="语法分析结果如下:\n";
+                this.textarea4 = `${startString}${errorInfo}`;
                 let analysisResult = program(tempArray);
                 if(!analysisResult.error){
                     console.log("语法分析成功");
@@ -151,7 +154,6 @@
         background: red;
     }
 </style>
-
 
 
 
