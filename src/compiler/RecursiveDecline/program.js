@@ -40,8 +40,7 @@ let program = (tempArray) => {
     classify(tempArray);
     analysisString.info = `progarm ===> block\n`;
     block();
-    log("在这个时候呢,我们已经匹配完了");
-    log(`状态显示如下   ${analysisString.error}`);
+    log("此处返回");
     return  analysisString;
 };
 
@@ -49,6 +48,7 @@ let block = () => {
     analysisString.info = `${analysisString.info}  block ===> {stmts}\n`;
     match("{");
     stmts();
+    log("回到原点了吗");
     match("}");
 
 };
@@ -86,7 +86,6 @@ let stmt = () => {
             match("if");
             match("(");
             bool();
-            log("调用了这儿1))))))))))))))))))))))))))))===");
             match(")");
             stmt();
             if(analysisString.tempArray[tempArrayIndex].type === 5){ //这里是 else 关键字
@@ -103,7 +102,6 @@ let stmt = () => {
             match("while");
             match("(");
             bool();
-            log("调用了这儿4))))))))))))))))))))))))))))))))===");
             match(")");
             stmt();
             break;
@@ -114,7 +112,6 @@ let stmt = () => {
             match("while");
             match("(");
             bool();
-            log("调用了这儿2))))))))))))))))))))))))))===");
             match(")");
             stmt();
             break;
@@ -143,11 +140,10 @@ let bool = () => {
             match("<");
             expr();
             break;
-        // case analysisString.tempArray[tempArrayIndex].type === 54:
-        case analysisString.tempArray[tempArrayIndex].type == 54:
+        case analysisString.tempArray[tempArrayIndex].type === "54":
+        // case analysisString.tempArray[tempArrayIndex].type == 54:
             log(`是 <= ?是 <= ?是 <= ?是 <= ?是 <= ?是 <= ?是 <= ?是 <= ?是 <= ?`);
             analysisString.info += `   bool ===> expr <= expr\n`;
-            log("调用了这儿1===");
             match("<=");
             expr();
             break;
@@ -185,7 +181,7 @@ let expr1 = () => {
     }
     switch (true){
         // case analysisString.tempArray[tempArrayIndex].type === 200:
-        case analysisString.tempArray[tempArrayIndex].type == 200:
+        case analysisString.tempArray[tempArrayIndex].type === "200":
             analysisString.info += `   expr1 ===> + term expr1\n`;
             match("+");
             term();
@@ -251,7 +247,6 @@ let factor = () =>{
             analysisString.info += `   factor ===> (expr)\n`;
             match("(");
             expr();
-            log("调用了这儿3))))))))))))))))))))))))))))))))===");
             match(")");
             break;
         case analysisString.tempArray[tempArrayIndex].type === "variabe":
