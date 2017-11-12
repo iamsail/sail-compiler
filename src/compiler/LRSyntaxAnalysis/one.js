@@ -134,7 +134,7 @@ let _pop = (tempObject) => {
 };
 
 let _getTop = (tempObject) =>{
-    log(tempObject);
+    // log("这儿" + tempObject);
     if(tempObject.top !== -1){
         return tempObject.stack[tempObject.top];
     }
@@ -143,18 +143,6 @@ let _getTop = (tempObject) =>{
         return 0;
     }
 };
-
-
-
-// let _getTop = (symbolP) =>{
-//     if(symbolP.top !== -1){
-//         return symbolP.stack[symbolP.top];
-//     }
-//     else{
-//         log("符号栈2空");
-//         return 0;
-//     }
-// };
 
 let _outStackOne = (symbolP) =>{
     if(symbolP.top < 0){
@@ -170,7 +158,7 @@ let _outStackTow = (instrP) =>{
     if(instrP.top < 0){
         log("符号栈4为空");
     }
-    for(let i = 0; i <= instrP.top; i++){
+    for(let i = instrP.top; i >=0 ; i--){
         // log(instrP.stack[i]);
         outputStr += `${instrP.stack[i]}`;
     }
@@ -190,8 +178,9 @@ let print = (statusP,symbolP,instrP) =>{
     }
     _outStackTow(instrP);
     //打印每行的结果
+    log("打印每行的结果");
     log(outputStr);
-    log(`\n`);
+    outputStr = '';
 };
 
 let gotoChar = (statusP,instrP) =>{
@@ -249,10 +238,18 @@ let start = () =>{
 
     //此处是进行处理的输入串,先我自己模拟
     let mockString = 'i*i+i#';
+    let result = [];
     //反转字符串
     for(let i = 0; i < mockString.length; i++){
-        _push(instrP,mockString[i]);
+        result[i] = mockString[mockString.length - 1 -i];
+        // log("&  " + result[i]);
+        _push(instrP,result[i]);
+        // _push(instrP,mockString[i]);
     }
+
+    log(instrP);
+
+
     // log(instrP);
     log(`状态栈               符号栈               输入串`);
     print(statusP,symbolP,instrP);
