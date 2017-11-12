@@ -32,18 +32,21 @@ rule[5] = new Rule('F',1);
 
 let indexChar = ['i','+','*',',','(',')','#','E','T','F'];
 
-let getIndexChar = () =>{
-
+let getIndexChar = (x) =>{
+    for(let j = 0; j < 9; j++){
+        if(indexChar[j] === x){
+            return j;
+        }
+    }
+    return -1;
 };
-
 
 //记录一下输出字符串
 let outputStr ='';
 
-
 //TODO:鉴于JS没有函数签名,我用 _ 来区分状态部分和符号部分的功能相同的函数
 
-// ======================状态部分
+// `======================状态部分
 
 function Status() {
     this.stack = [];
@@ -63,6 +66,27 @@ let push = (statusP,x) =>{
     }
 };
 
+let pop = (statusP) =>{
+    let x;
+    if(statusP.top !== 0){
+        x = statusP.stack[statusP.top];
+        statusP.top--;
+        return x;
+    }else{
+        log(`状态栈1空`);
+        return 0;
+    }
+};
+
+let getTop = (statusP) =>{
+    if(statusP.top !== -1){
+        return statusP.stack[statusP.top];
+    }else {
+        log("状态栈2空");
+        return 0;
+    }
+};
+
 let outStack = (statusP) =>{
     if(statusP.top < 0){
         log("状态栈3为空");
@@ -73,9 +97,11 @@ let outStack = (statusP) =>{
     }
 };
 
-// ======================状态部分
+// $======================状态部分
 
-// ======================符号部分
+
+
+// `======================符号部分
 
 function SymbolInStr() {
     this.stack = [];
@@ -95,6 +121,41 @@ let _push = (tempObject,x) =>{
     }
 };
 
+let _pop = (tempObject) => {
+    let x;
+    if(tempObject.top !== -1){
+        x = tempObject.stack[tempObject.top];
+        tempObject.top--;
+        return x;
+    }else{
+        log(`符号栈1空`);
+        return 0;
+    }
+};
+
+let _getTop = (tempObject) =>{
+    log(tempObject);
+    if(tempObject.top !== -1){
+        return tempObject.stack[tempObject.top];
+    }
+    else{
+        log("符号栈2空");
+        return 0;
+    }
+};
+
+
+
+// let _getTop = (symbolP) =>{
+//     if(symbolP.top !== -1){
+//         return symbolP.stack[symbolP.top];
+//     }
+//     else{
+//         log("符号栈2空");
+//         return 0;
+//     }
+// };
+
 let _outStackOne = (symbolP) =>{
     if(symbolP.top < 0){
         log("符号栈3为空");
@@ -104,7 +165,6 @@ let _outStackOne = (symbolP) =>{
         outputStr += `${symbolP.stack[i]}`;
     }
 };
-
 
 let _outStackTow = (instrP) =>{
     if(instrP.top < 0){
@@ -116,9 +176,7 @@ let _outStackTow = (instrP) =>{
     }
 };
 
-
-
-// ======================符号部分
+// $======================符号部分
 
 let print = (statusP,symbolP,instrP) =>{
     let i;
@@ -131,11 +189,52 @@ let print = (statusP,symbolP,instrP) =>{
         outputStr += ` `;
     }
     _outStackTow(instrP);
+    //打印每行的结果
     log(outputStr);
     log(`\n`);
 };
 
+let gotoChar = (statusP,instrP) =>{
+    let x,y,z;
 
+    x = _getTop(instrP);
+    y = getTop(statusP);
+    z = getIndexChar(x);
+    return table[y][z];
+};
+
+let action = (statusP,symbolP,instrP) =>{
+    let i;
+    i = gotoChar(statusP,instrP);
+
+    if(i === -1){
+        log(`归约错误`);
+    }
+
+    if(i === 12){
+        log(`归约成功`);
+    }
+
+    if(i >= 0 && i <= 11){
+        let a;
+        push(statusP,i);
+        a = _pop(instrP);
+        _push(symbolP,a);
+        print(statusP,symbolP,instrP);
+        action(statusP,symbolP,instrP);
+    }
+
+    if(i >= 21 && i <= 26){
+        let temp;
+        temp = rule[i-21].y;
+        for(let j = 0;j < temp;j++){
+            pop(statusP);
+            _pop(symbolP);
+        }
+        _push(instrP,rule[i-21].x);
+        action(statusP,symbolP,instrP);
+    }
+};
 
 let start = () =>{
     let x;
@@ -157,7 +256,7 @@ let start = () =>{
     // log(instrP);
     log(`状态栈               符号栈               输入串`);
     print(statusP,symbolP,instrP);
-
+    action(statusP,symbolP,instrP);
 };
 
 start();
