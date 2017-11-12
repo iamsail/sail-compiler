@@ -126,6 +126,13 @@ let print = (statusP,symbolP,instrP) =>{
     for(i = 0; i < 20 - statusP.top;i++){
         outputStr += ` `;
     }
+    _outStackOne(symbolP);
+    for(i = 0; i < 20;i++){
+        outputStr += ` `;
+    }
+    _outStackTow(instrP);
+    log(outputStr);
+    log(`\n`);
 };
 
 
@@ -148,7 +155,7 @@ let start = () =>{
         _push(instrP,mockString[i]);
     }
     // log(instrP);
-    log(`状态栈         符号栈          输入串`);
+    log(`状态栈               符号栈               输入串`);
     print(statusP,symbolP,instrP);
 
 };
