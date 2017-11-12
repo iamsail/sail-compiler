@@ -36,6 +36,11 @@ let getIndexChar = () =>{
 
 };
 
+
+//记录一下输出字符串
+let outputStr ='';
+
+
 //TODO:鉴于JS没有函数签名,我用 _ 来区分状态部分和符号部分的功能相同的函数
 
 // ======================状态部分
@@ -55,6 +60,16 @@ let push = (statusP,x) =>{
         statusP.stack[statusP.top] = x;
     }else{
         log("初始化状态栈错误");
+    }
+};
+
+let outStack = (statusP) =>{
+    if(statusP.top < 0){
+        log("状态栈3为空");
+    }
+    for(let i = 0; i <= statusP.top; i++){
+        // log(statusP.stack[i]);
+        outputStr += `${statusP.stack[i]}`;
     }
 };
 
@@ -80,7 +95,38 @@ let _push = (tempObject,x) =>{
     }
 };
 
+let _outStackOne = (symbolP) =>{
+    if(symbolP.top < 0){
+        log("符号栈3为空");
+    }
+    for(let i = 0; i <= symbolP.top; i++){
+        // log(symbolP.stack[i]);
+        outputStr += `${symbolP.stack[i]}`;
+    }
+};
+
+
+let _outStackTow = (instrP) =>{
+    if(instrP.top < 0){
+        log("符号栈4为空");
+    }
+    for(let i = 0; i <= instrP.top; i++){
+        // log(instrP.stack[i]);
+        outputStr += `${instrP.stack[i]}`;
+    }
+};
+
+
+
 // ======================符号部分
+
+let print = (statusP,symbolP,instrP) =>{
+    let i;
+    outStack(statusP);
+    for(i = 0; i < 20 - statusP.top;i++){
+        outputStr += ` `;
+    }
+};
 
 
 
@@ -94,11 +140,16 @@ let start = () =>{
     initSymbolInStr(instrP);
     push(statusP,0);
     _push(symbolP,'#');
-    // log(statusP);
-    // log(symbolP);
 
     //此处是进行处理的输入串,先我自己模拟
     let mockString = 'i*i+i#';
+    //反转字符串
+    for(let i = 0; i < mockString.length; i++){
+        _push(instrP,mockString[i]);
+    }
+    // log(instrP);
+    log(`状态栈         符号栈          输入串`);
+    print(statusP,symbolP,instrP);
 
 };
 
