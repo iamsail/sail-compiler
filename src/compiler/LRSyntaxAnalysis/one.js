@@ -30,7 +30,7 @@ rule[3] = new Rule('T',1);
 rule[4] = new Rule('F',3);
 rule[5] = new Rule('F',1);
 
-let indexChar = ['i','+','*',',','(',')','#','E','T','F'];
+let indexChar = ['i','+','*','(',')','#','E','T','F'];
 
 let getIndexChar = (x) =>{
     for(let j = 0; j < 9; j++){
@@ -178,7 +178,7 @@ let print = (statusP,symbolP,instrP) =>{
     }
     _outStackTow(instrP);
     //打印每行的结果
-    log("打印每行的结果");
+    // log("打印每行的结果");
     log(outputStr);
     outputStr = '';
 };
@@ -188,13 +188,16 @@ let gotoChar = (statusP,instrP) =>{
 
     x = _getTop(instrP);
     y = getTop(statusP);
+    // log(`这个x  ${x}`);
     z = getIndexChar(x);
+    // log(`y z  ${y}  ${z}`);
     return table[y][z];
 };
 
 let action = (statusP,symbolP,instrP) =>{
     let i;
     i = gotoChar(statusP,instrP);
+    // log(`看一下  ${i}`);
 
     if(i === -1){
         log(`归约错误`);
@@ -254,6 +257,9 @@ let start = () =>{
     log(`状态栈               符号栈               输入串`);
     print(statusP,symbolP,instrP);
     action(statusP,symbolP,instrP);
+    // log(`看下Ｆ  `);
+    // let xx = getIndexChar('');
+    // log(xx);
 };
 
 start();
