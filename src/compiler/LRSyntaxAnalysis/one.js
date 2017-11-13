@@ -62,7 +62,8 @@ let push = (statusP,x) =>{
         statusP.top++;
         statusP.stack[statusP.top] = x;
     }else{
-        log("初始化状态栈错误");
+        // log("初始化状态栈错误");
+        outputStr += `\n初始化状态栈错误\n`;
     }
 };
 
@@ -73,7 +74,8 @@ let pop = (statusP) =>{
         statusP.top--;
         return x;
     }else{
-        log(`状态栈1空`);
+        // log(`状态栈1空`);
+        outputStr += `\n状态栈1空\n`;
         return 0;
     }
 };
@@ -82,14 +84,18 @@ let getTop = (statusP) =>{
     if(statusP.top !== -1){
         return statusP.stack[statusP.top];
     }else {
-        log("状态栈2空");
+        // log("状态栈2空");
+        outputStr += `\n状态栈2空\n`;
+
         return 0;
     }
 };
 
 let outStack = (statusP) =>{
     if(statusP.top < 0){
-        log("状态栈3为空");
+        // log("状态栈3为空");
+        outputStr += `\n状态栈3空\n`;
+
     }
     for(let i = 0; i <= statusP.top; i++){
         // log(statusP.stack[i]);
@@ -117,7 +123,9 @@ let _push = (tempObject,x) =>{
         tempObject.top++;
         tempObject.stack[tempObject.top] = x;
     }else{
-        log("初始化符号栈错误");
+        // log("初始化符号栈错误");
+        outputStr += `\n初始化符号栈错误\n`;
+
     }
 };
 
@@ -128,7 +136,8 @@ let _pop = (tempObject) => {
         tempObject.top--;
         return x;
     }else{
-        log(`符号栈1空`);
+        // log(`符号栈1空`);
+        outputStr += `\n符号栈1空\n`;
         return 0;
     }
 };
@@ -139,14 +148,17 @@ let _getTop = (tempObject) =>{
         return tempObject.stack[tempObject.top];
     }
     else{
-        log("符号栈2空");
+        // log("符号栈2空");
+        outputStr += `\n符号栈2空\n`;
         return 0;
     }
 };
 
 let _outStackOne = (symbolP) =>{
     if(symbolP.top < 0){
-        log("符号栈3为空");
+        // log("符号栈3为空");
+        outputStr += `\n符号栈3空\n`;
+
     }
     for(let i = 0; i <= symbolP.top; i++){
         outputStr += ` ${symbolP.stack[i]}`;
@@ -155,7 +167,8 @@ let _outStackOne = (symbolP) =>{
 
 let _outStackTow = (instrP) =>{
     if(instrP.top < 0){
-        log("符号栈4为空");
+        // log("符号栈4为空");
+        outputStr += `\n符号栈4空\n`;
     }
     for(let i = instrP.top; i >=0 ; i--){
         outputStr += ` ${instrP.stack[i]}`;
