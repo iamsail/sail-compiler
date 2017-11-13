@@ -1,7 +1,7 @@
 <template>
     <div class="hello">
         <el-row type="flex" class="row-bg" justify="space-around" >
-            <el-col :span="7"><div class="grid-content  bg-purple">
+            <el-col :span="6"><div class="grid-content  bg-purple">
                 <el-input
                         type="textarea"
                         :autosize="{ minRows: 30, maxRows: 50}"
@@ -26,19 +26,30 @@
                 <el-input
                         type="textarea"
                         :autosize="{ minRows: 30, maxRows: 50}"
-                        placeholder="语法分析"
+                        placeholder="递归下降语法分析"
                         v-model="textarea4"
                 >
                 </el-input>
             </div></el-col>
 
+
+            <el-col :span="10"><div class="grid-content bg-purple-light">
+                <el-input
+                        type="textarea"
+                        :autosize="{ minRows: 30, maxRows: 50}"
+                        placeholder="LR语法分析"
+                        v-model="textarea5"
+                >
+                </el-input>
+            </div></el-col>
         </el-row>
 
         <div style="margin: 20px 0;"></div>
 
         <el-button-group>
-            <el-button type="primary" size="medium"   v-on:click="compile"   icon="el-icon-caret-right"></el-button>
+            <el-button type="primary" size="medium"  v-on:click="compile"   icon="el-icon-caret-right"></el-button>
             <el-button type="primary" size="medium"  v-on:click="del" icon="el-icon-delete"></el-button>
+            <el-button type="primary" size="medium"  v-on:click="lr" icon="el-icon-success"></el-button>
         </el-button-group>
         <div style="margin: 20px 0;"></div>
         <h2>{{myInfo}}</h2>
@@ -47,7 +58,9 @@
 
 <script>
     import {start}  from '../compiler/start';
+//    import {program}  from '../compiler/RecursiveDecline/program';
     import {program}  from '../compiler/RecursiveDecline/program';
+    import {startLR}  from '../compiler/LRSyntaxAnalysis/one';
     export default {
         name: 'compiler',
         data() {
@@ -55,7 +68,8 @@
                 myInfo: "李长航 计科二班 08153398",
                 textarea2: '',
                 textarea3: '',
-                textarea4: ''
+                textarea4: '',
+                textarea5: ''
             }
         },
         methods:{
@@ -85,6 +99,7 @@
                 this.textarea2 = "";
                 this.textarea3 = "";
                 this.textarea4 = "";
+                this.textarea5 = "";
             },
             analysis:function (tempArray) {
                 let errorInfo = "语法分析失败";
@@ -98,6 +113,29 @@
                 }
 //                console.log(`语法分析结果如下\n ${analysisResult} \n=============\n`);
                 this.textarea4 = `${startString}${analysisResult.info}`;
+            },
+            lr:function () {
+                let temp = start(this.textarea3);
+                if(!temp.error){
+                    let startString="词法分析结果如下:\n";
+                    let tempString = "";
+                    temp.info.forEach(function(item){
+                        tempString += `(${item.type},${item.value})\n`;
+                    });
+                    let resultString = `${startString}${tempString}`;
+                    this.textarea2 =  resultString;
+                    let tempArray = temp.info;
+                }
+                else{
+                    let resultString="";
+                    resultString += temp.info;
+                    this.textarea2 =  resultString;
+                }
+
+                let tempTextarea3 = this.textarea3;
+                let finnalFLstr = startLR(tempTextarea3);
+                this.textarea5 = finnalFLstr;
+                finnalFLstr = '';
             }
         }
     }

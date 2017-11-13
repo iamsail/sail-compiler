@@ -160,6 +160,9 @@ let _outStackTow = (instrP) =>{
     for(let i = instrP.top; i >=0 ; i--){
         outputStr += ` ${instrP.stack[i]}`;
     }
+
+
+    outputStr += '\n';
 };
 
 // $======================符号部分
@@ -167,16 +170,21 @@ let _outStackTow = (instrP) =>{
 let print = (statusP,symbolP,instrP) =>{
     let i;
     outStack(statusP);
-    for(i = 0; i < 20 - statusP.top;i++){
+    // log(`让我看下top  ${statusP.top}`);
+    for(i = 0; i < 20 - statusP.top * 2;i++){
         outputStr += ` `;
     }
     _outStackOne(symbolP);
+    //TODO:这里控制的是输出格式
+    //
     for(i = 0; i < 20;i++){
         outputStr += ` `;
     }
     _outStackTow(instrP);
-    log(outputStr);
-    outputStr = '';
+
+
+    // log(outputStr);
+    // outputStr = '';
 };
 
 let gotoChar = (statusP,instrP) =>{
@@ -194,11 +202,13 @@ let action = (statusP,symbolP,instrP) =>{
     // log(`看一下  ${i}`);
 
     if(i === -1){
-        log(`归约错误`);
+        // log(`归约错误`);
+        outputStr += `归约错误`;
     }
 
     if(i === 12){
-        log(`归约成功`);
+        // log(`归约成功`);
+        outputStr += `归约成功`;
     }
 
     if(i >= 0 && i <= 11){
@@ -222,7 +232,8 @@ let action = (statusP,symbolP,instrP) =>{
     }
 };
 
-let start = () =>{
+let startLR = (inputString) =>{
+    outputStr = '';
     let x;
     let statusP = new Status();
     let symbolP = new SymbolInStr();
@@ -234,8 +245,14 @@ let start = () =>{
     _push(symbolP,'#');
 
     //此处是进行处理的输入串,先我自己模拟
-    let mockString = 'i*i+i#';
-    // let mockString = 'i*i#';
+    // let mockString = 'i*i+i#';
+
+    //TODO:清除空白部分哦
+    let WHITESPACE = /\s/g;
+    let input = inputString.replace(WHITESPACE,'');
+    log(`input是   ${input}`);
+    let mockString = input;
+
     let result = [];
     //反转字符串
     for(let i = 0; i < mockString.length; i++){
@@ -244,10 +261,14 @@ let start = () =>{
     }
 
     log(instrP);
-    log(`状态栈               符号栈               输入串`);
+    // log(`状态栈               符号栈               输入串`);
+    outputStr += `状态栈               符号栈               输入串\n`;
     print(statusP,symbolP,instrP);
     action(statusP,symbolP,instrP);
-
+    log(outputStr);
+    return outputStr;
 };
 
-start();
+// startLR(inputString);
+
+export {startLR};

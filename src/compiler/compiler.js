@@ -302,6 +302,7 @@ let tokenizer = (input)  =>{
                 case ';': current = getToken(tokens,'205',';',current);continue;break;
                 case '(': current = getToken(tokens,'100','(',current);continue;break;
                 case ')': current = getToken(tokens,'101',')',current);continue;break;
+                case '#': current = getToken(tokens,'300','#',current);continue;break;
                 default : errorStatus = -2;log("|是它|" + char +"||");rowColumn.column--;logError(errorStatus,rowColumn.row,rowColumn.column);break;
             }
         }
