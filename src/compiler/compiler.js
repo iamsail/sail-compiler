@@ -71,6 +71,7 @@ let tokenizer = (input)  =>{
 
     while(current < input.length && errorStatus===0 ){
         let char = input[current];
+
         //对列追踪的修复
         let tempCurrent = current - 1;
         if(input[tempCurrent] === '\n'){
@@ -211,14 +212,21 @@ let tokenizer = (input)  =>{
             let value = '';
             //TODO:最后对变量名进行处理,但是不能等于undefined
 
+
          while (variableName.test(char)) {
              if(char === '\n'){ rowColumn.row++;rowColumn.column = 1;break;  }
+
+
+             // log(`in让我看看当前char ${char}`);
 
              if(char !== undefined){
                  value += char;
                  char = input[++current];
 
+                 log(`此时char ${char}`);
+
                  if(char !== undefined){
+                     log(`哎呦,不错哦`);
                      if(char === '\n'){ rowColumn.row++;rowColumn.column = 1;break;  }
                      let WHITESPACE = /\s/;
                      if (WHITESPACE.test(char)) {
@@ -228,31 +236,28 @@ let tokenizer = (input)  =>{
                      }
 
                      let variableName = /(_|[a-z]|[0-9])/i;
-                     let variableNameMore = /({|}|\(|\)|;|,)/i;
+                     // let variableNameMore = /({|}|\(|\)|;|,)/i;
+                     let variableNameMore = /({|}|\(|\)|;|,|\+|-|\*|\\|=|#)/i;
                      let variableResult = variableNameMore.test(char);
 
-
-                     // if(variableResult){
-                     //     // rowColumn.column++;
-                     // }else{
-                     //     // rowColumn.column ++;
-                     //     // errorStatus = -3;
-                     //     // logError(errorStatus,rowColumn.row,rowColumn.column);
-                     //     break;
-                     // }
-
-                    // if(!Result){break;}
-
                     if(variableResult){
+                        log(`匹配了`);
                            current--;
                            break;
                     }
+                    else{
+                        log(`出错,不符合标识符命名规则`);
+                    }
+
+
+                    log("转");
 
                  } else if(rowColumn.column === input.length){ //处理完字符串
                      break;
                  }else{
                     break;
                  }
+                 log(`说了拜拜`);
              }else{
                  break;}
          }
@@ -309,7 +314,6 @@ let tokenizer = (input)  =>{
 
         current++;
     }
-    // log(rowColumn.row);
     log("   ===============代码行数===============     "  + rowColumn.row);
     if(errorStatus === 0){
         // print(tokens);
