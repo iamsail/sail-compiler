@@ -177,8 +177,6 @@ let print = (statusP,symbolP,instrP) =>{
         outputStr += ` `;
     }
     _outStackTow(instrP);
-    //打印每行的结果
-    // log("打印每行的结果");
     log(outputStr);
     outputStr = '';
 };
@@ -188,9 +186,7 @@ let gotoChar = (statusP,instrP) =>{
 
     x = _getTop(instrP);
     y = getTop(statusP);
-    // log(`这个x  ${x}`);
     z = getIndexChar(x);
-    // log(`y z  ${y}  ${z}`);
     return table[y][z];
 };
 
@@ -241,25 +237,19 @@ let start = () =>{
 
     //此处是进行处理的输入串,先我自己模拟
     let mockString = 'i*i+i#';
+    // let mockString = 'i*i#';
     let result = [];
     //反转字符串
     for(let i = 0; i < mockString.length; i++){
         result[i] = mockString[mockString.length - 1 -i];
-        // log("&  " + result[i]);
         _push(instrP,result[i]);
-        // _push(instrP,mockString[i]);
     }
 
     log(instrP);
-
-
-    // log(instrP);
     log(`状态栈               符号栈               输入串`);
     print(statusP,symbolP,instrP);
     action(statusP,symbolP,instrP);
-    // log(`看下Ｆ  `);
-    // let xx = getIndexChar('');
-    // log(xx);
+
 };
 
 start();
