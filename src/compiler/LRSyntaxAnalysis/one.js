@@ -93,7 +93,7 @@ let outStack = (statusP) =>{
     }
     for(let i = 0; i <= statusP.top; i++){
         // log(statusP.stack[i]);
-        outputStr += `${statusP.stack[i]}`;
+        outputStr += ` ${statusP.stack[i]}`;
     }
 };
 
@@ -149,8 +149,7 @@ let _outStackOne = (symbolP) =>{
         log("符号栈3为空");
     }
     for(let i = 0; i <= symbolP.top; i++){
-        // log(symbolP.stack[i]);
-        outputStr += `${symbolP.stack[i]}`;
+        outputStr += ` ${symbolP.stack[i]}`;
     }
 };
 
@@ -159,8 +158,7 @@ let _outStackTow = (instrP) =>{
         log("符号栈4为空");
     }
     for(let i = instrP.top; i >=0 ; i--){
-        // log(instrP.stack[i]);
-        outputStr += `${instrP.stack[i]}`;
+        outputStr += ` ${instrP.stack[i]}`;
     }
 };
 
